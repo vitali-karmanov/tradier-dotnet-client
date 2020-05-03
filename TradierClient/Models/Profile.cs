@@ -5,7 +5,7 @@ using Tradier.Client.Helpers;
 
 namespace Tradier.Client.Models
 {
-    public class UserProfile
+    public class ProfileRootObject
     {
         [JsonProperty("profile")]
         public Profile Profile { get; set; }
