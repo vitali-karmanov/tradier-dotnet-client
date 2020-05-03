@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Http;
 
-namespace TradierClient
+namespace Tradier.Client
 {
     public class TradierClient
     {
