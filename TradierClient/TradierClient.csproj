@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Models\Positions.cs~RF299977a.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="HttpClientFactoryLite" Version="0.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
