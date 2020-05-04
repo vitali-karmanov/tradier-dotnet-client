@@ -8,14 +8,14 @@ namespace Tradier.Client.Models
     public class PositionsRootobject
     {
         [JsonProperty("positions")] 
-        public Positions? Positions { get; set; }
+        public Positions Positions { get; set; }
     }
 
     public class Positions
     {
         [JsonProperty("position")]
         [JsonConverter(typeof(SingleOrArrayConverter<Position>))]
-        public List<Position>? Position { get; set; }
+        public List<Position> Position { get; set; }
     }
 
     public class Position
