@@ -11,6 +11,8 @@ namespace Tradier.Client.Config
         public Uri BaseUri { get; private set; } = new Uri("https://api.tradier.com/v1/");
 
         public string ApiToken { get; set; }
+        
+        public string AccountNumber { get; set; }
 
         public void UseSandbox()
         {
