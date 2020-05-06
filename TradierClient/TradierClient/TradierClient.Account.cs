@@ -71,7 +71,7 @@ namespace Tradier.Client
             }
         }
 
-        public async Task<Orders> GetOrders(string accountNumber, int page = 1, int limitPerPage = 25)
+        public async Task<Orders> GetOrders(string accountNumber)
         {
             using var request = new HttpRequestMessage(HttpMethod.Get, $"accounts/{accountNumber}/orders");
             using var response = await _httpClient.SendAsync(request);
