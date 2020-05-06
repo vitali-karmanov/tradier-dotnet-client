@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Linq;
+using Newtonsoft.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Tradier.Client.Models;
@@ -81,6 +82,19 @@ namespace Tradier.Client
                 content = content.Replace("\"null\"", "null");
 
                 return JsonConvert.DeserializeObject<OrdersRootobject>(content).Orders;
+            }
+        }
+
+        public async Task<Order> GetOrder(string accountNumber, string orderId)
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"accounts/{accountNumber}/orders/{orderId}");
+            using var response = await _httpClient.SendAsync(request);
+            {
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                content = content.Replace("\"null\"", "null");
+
+                return JsonConvert.DeserializeObject<Orders>(content).Order.FirstOrDefault();
             }
         }
     }
