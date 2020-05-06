@@ -57,5 +57,18 @@ namespace Tradier.Client
                 return JsonConvert.DeserializeObject<HistoryRootobject>(content).History;
             }
         }
+
+        public async Task<GainLoss> GetGainLoss(string accountNumber, int page = 1, int limitPerPage = 25)
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"accounts/{accountNumber}/gainloss?page={page}&limit={limitPerPage}");
+            using var response = await _httpClient.SendAsync(request);
+            {
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                content = content.Replace("\"null\"", "null");
+
+                return JsonConvert.DeserializeObject<GainLossRootobject>(content).GainLoss;
+            }
+        }
     }
 }
