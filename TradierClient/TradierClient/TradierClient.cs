@@ -1,31 +1,29 @@
-﻿using Microsoft.Extensions.Http;
+﻿using System;
+using Microsoft.Extensions.Http;
 using System.Net.Http;
-using Tradier.Client.Config;
+using Tradier.Client.Helpers;
 
 // ReSharper disable once CheckNamespace
 namespace Tradier.Client
 {
-    public sealed partial class TradierClient
+    public class TradierClient
     {
-        private readonly HttpClient _httpClient;
-        private readonly TradierClientConfig _config = new TradierClientConfig();
+        public Account Account { get; set; }
 
-        public TradierClient(string apiToken, bool useSandbox = false)
+        public TradierClient(string apiToken, bool useProduction = false)
         {
-            _config.ApiToken = apiToken;
-            if (useSandbox)
-            {
-                _config.UseSandbox();
-            }
+            Uri baseEndpoint = useProduction ? new Uri(Settings.PRODUCTION_ENDPOINT) : new Uri(Settings.SANDBOX_ENDPOINT);
 
             HttpClientFactory httpClientFactory = new HttpClientFactory();
             httpClientFactory.Register("TradierClient", builder => builder
-            .ConfigureHttpClient(c => c.BaseAddress = _config.BaseUri)
-            .ConfigureHttpClient(c => c.DefaultRequestHeaders.Add("Authorization", $"Bearer {_config.ApiToken}"))
+            .ConfigureHttpClient(c => c.BaseAddress = baseEndpoint)
+            .ConfigureHttpClient(c => c.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}"))
             .ConfigureHttpClient(c => c.DefaultRequestHeaders.Add("Accept", "application/json")));
 
-            _httpClient = httpClientFactory.CreateClient("TradierClient");
+            HttpClient httpClient = httpClientFactory.CreateClient("TradierClient");
+            Requests request = new Requests(httpClient);
 
+            Account = new Account(request);
         }
 
     }
