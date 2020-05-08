@@ -1,11 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Tradier.Client.Helpers
 {
-    public class Requests<T>
+    public class Requests
     {
         private readonly HttpClient _httpClient;
 
@@ -14,12 +13,12 @@ namespace Tradier.Client.Helpers
             _httpClient = httpClient;
         }
 
-        public async Task<T> GetDeserialized(Uri uri)
+        public async Task<string> GetContent(Uri uri)
         {
-            return await GetDeserialized(uri.ToString());
+            return await GetContent(uri.ToString());
         }
 
-        public async Task<T> GetDeserialized(string uri)
+        public async Task<string> GetContent(string uri)
         {
             using var request = new HttpRequestMessage(HttpMethod.Get, uri);
             using var response = await _httpClient.SendAsync(request);
@@ -28,7 +27,7 @@ namespace Tradier.Client.Helpers
                 var content = await response.Content.ReadAsStringAsync();
                 content = content.Replace("\"null\"", "null");
 
-                return JsonConvert.DeserializeObject<T>(content);
+                return content;
             }
         }
     }
