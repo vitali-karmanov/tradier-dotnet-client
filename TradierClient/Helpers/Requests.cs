@@ -16,15 +16,7 @@ namespace Tradier.Client.Helpers
 
         public async Task<T> GetDeserialized(Uri uri)
         {
-            using var request = new HttpRequestMessage(HttpMethod.Get, uri);
-            using var response = await _httpClient.SendAsync(request);
-            {
-                response.EnsureSuccessStatusCode();
-                var content = await response.Content.ReadAsStringAsync();
-                content = content.Replace("\"null\"", "null");
-
-                return JsonConvert.DeserializeObject<T>(content);
-            }
+            return await GetDeserialized(uri.ToString());
         }
 
         public async Task<T> GetDeserialized(string uri)
