@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Tradier.Client.Models
+namespace Tradier.Client.Models.Account
 {
 
     public class HistoryRootobject

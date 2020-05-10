@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 
 
-namespace Tradier.Client.Models
+namespace Tradier.Client.Models.Account
 {
     public class BalanceRootObject
     {

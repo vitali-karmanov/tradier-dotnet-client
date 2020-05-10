@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Tradier.Client.Helpers;
-using Tradier.Client.Models;
+using Tradier.Client.Models.Account;
 
 // ReSharper disable once CheckNamespace
 namespace Tradier.Client

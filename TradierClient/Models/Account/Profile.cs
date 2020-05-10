@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Tradier.Client.Helpers;
 
-namespace Tradier.Client.Models
+namespace Tradier.Client.Models.Account
 {
     public class ProfileRootObject
     {
