@@ -9,6 +9,7 @@ namespace Tradier.Client
     public class TradierClient
     {
         public Account Account { get; set; }
+        public MarketData MarketData { get; set; }
 
         public TradierClient(string apiToken, bool useProduction = false)
         {
@@ -24,6 +25,7 @@ namespace Tradier.Client
             Requests request = new Requests(httpClient);
 
             Account = new Account(request);
+            MarketData = new MarketData(request);
         }
 
     }
