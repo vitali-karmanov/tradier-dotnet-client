@@ -133,38 +133,38 @@ namespace Tradier.Client.Models.MarketData
 
     public class Greeks
     {
-        [JsonProperty("Delta")]
-        public float delta { get; set; }
+        [JsonProperty("delta")]
+        public float Delta { get; set; }
 
-        [JsonProperty("Gamma")]
-        public float gamma { get; set; }
+        [JsonProperty("gamma")]
+        public float Gamma { get; set; }
 
-        [JsonProperty("Theta")]
-        public float theta { get; set; }
+        [JsonProperty("theta")]
+        public float Theta { get; set; }
 
-        [JsonProperty("Vega")]
-        public float vega { get; set; }
+        [JsonProperty("vega")]
+        public float Vega { get; set; }
 
-        [JsonProperty("Rho")]
-        public float rho { get; set; }
+        [JsonProperty("rho")]
+        public float Rho { get; set; }
 
-        [JsonProperty("Phi")]
-        public float phi { get; set; }
+        [JsonProperty("phi")]
+        public float Phi { get; set; }
 
-        [JsonProperty("BidIV")]
-        public float bid_iv { get; set; }
+        [JsonProperty("bid_iv")]
+        public float BidIV { get; set; }
 
-        [JsonProperty("MidIV")]
-        public float mid_iv { get; set; }
+        [JsonProperty("mid_iv")]
+        public float MidIV { get; set; }
 
-        [JsonProperty("AskIV")]
-        public float ask_iv { get; set; }
+        [JsonProperty("ask_iv")]
+        public float AskIV { get; set; }
 
-        [JsonProperty("SMVVolume")]
-        public float smv_vol { get; set; }
+        [JsonProperty("smv_vol")]
+        public float SMVIV { get; set; }
 
-        [JsonProperty("UpdatedAt")]
+        [JsonProperty("updated_at")]
         [JsonConverter(typeof(ParseExactConverter))]
-        public DateTime updated_at { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }
