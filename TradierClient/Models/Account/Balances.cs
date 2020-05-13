@@ -63,7 +63,7 @@ namespace Tradier.Client.Models.Account
         public int UnclearedFunds { get; set; }
 
         [JsonProperty("pending_cash")]
-        public int PendingCash { get; set; }
+        public float PendingCash { get; set; }
 
         [JsonProperty("margin")]
         public Margin Margin { get; set; }
