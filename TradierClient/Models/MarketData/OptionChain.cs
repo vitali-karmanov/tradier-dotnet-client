@@ -34,25 +34,25 @@ namespace Tradier.Client.Models.MarketData
         public string Type { get; set; }
 
         [JsonProperty("last")]
-        public object Last { get; set; }
+        public float? Last { get; set; }
 
         [JsonProperty("change")]
-        public object Change { get; set; }
+        public float? Change { get; set; }
 
         [JsonProperty("volume")]
         public int Volume { get; set; }
 
         [JsonProperty("open")]
-        public object Open { get; set; }
+        public float? Open { get; set; }
 
         [JsonProperty("high")]
-        public object High { get; set; }
+        public float? High { get; set; }
 
         [JsonProperty("low")]
-        public object Low { get; set; }
+        public float? Low { get; set; }
 
         [JsonProperty("close")]
-        public object Close { get; set; }
+        public float? Close { get; set; }
 
         [JsonProperty("bid")]
         public float Bid { get; set; }
@@ -67,7 +67,7 @@ namespace Tradier.Client.Models.MarketData
         public float Strike { get; set; }
 
         [JsonProperty("change_percentage")]
-        public object ChangePercentage { get; set; }
+        public float? ChangePercentage { get; set; }
 
         [JsonProperty("average_volume")]
         public int AverageVolume { get; set; }
@@ -80,7 +80,7 @@ namespace Tradier.Client.Models.MarketData
         public DateTime TradeDate { get; set; }
 
         [JsonProperty("prevclose")]
-        public object PreviousClose { get; set; }
+        public float? PreviousClose { get; set; }
 
         [JsonProperty("week_52_high")]
         public float Week52High { get; set; }
@@ -161,7 +161,7 @@ namespace Tradier.Client.Models.MarketData
         public float AskIV { get; set; }
 
         [JsonProperty("smv_vol")]
-        public float SMVIV { get; set; }
+        public float SmvIV { get; set; }
 
         [JsonProperty("updated_at")]
         [JsonConverter(typeof(ParseExactConverter))]
