@@ -17,7 +17,7 @@ namespace Tradier.Client
             _requests = requests;
         }
 
-        public async Task<Order> GetOptionOrder(string accountNumber, string classOrder, string symbol, string optionSymbol, string side, string quantity, string type, string duration, string? price, string? stop)
+        public async Task<Order> PlaceOptionOrder(string accountNumber, string classOrder, string symbol, string optionSymbol, string side, string quantity, string type, string duration, string? price, string? stop)
         {
             var data = new Dictionary<string, string>
             {
