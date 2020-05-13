@@ -19,7 +19,7 @@ namespace Tradier.Client
 
         public async Task<Options> GetOptionChain(string symbol, string expiration, bool greeks = false)
         {
-            var response = await _requests.GetContent($"markets/options/chains?symbol={symbol}&expiration={expiration}&greeks={greeks}");
+            var response = await _requests.GetRequest($"markets/options/chains?symbol={symbol}&expiration={expiration}&greeks={greeks}");
             return JsonConvert.DeserializeObject<OptionChainRootobject>(response).Options;
         }
 
