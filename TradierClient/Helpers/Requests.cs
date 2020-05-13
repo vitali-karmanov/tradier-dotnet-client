@@ -14,14 +14,9 @@ namespace Tradier.Client.Helpers
             _httpClient = httpClient;
         }
 
-        public async Task<string> GetContent(Uri uri)
+        private async Task<string> BaseSendAsyncRequest(string uri, HttpMethod method)
         {
-            return await GetContent(uri.ToString());
-        }
-
-        public async Task<string> GetContent(string uri)
-        {
-            using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+            using var request = new HttpRequestMessage(method, uri);
             using var response = await _httpClient.SendAsync(request);
             {
                 response.EnsureSuccessStatusCode();
@@ -32,7 +27,34 @@ namespace Tradier.Client.Helpers
             }
         }
 
-        public async Task<string> PostContent(string uri, Dictionary<string, string> values)
+        public async Task<string> GetRequest(string uri)
+        {
+            return await BaseSendAsyncRequest(uri, HttpMethod.Get);
+        }
+
+        public async Task<string> GetRequest(Uri uri)
+        {
+            return await GetRequest(uri.ToString());
+        }
+
+        public async Task<string> DeleteRequest(string uri)
+        {
+            return await BaseSendAsyncRequest(uri, HttpMethod.Delete);
+        }
+
+        public async Task<string> PutRequest(string uri, Dictionary<string, string> values)
+        {
+            using var response = await _httpClient.PutAsync(uri, new FormUrlEncodedContent(values));
+            {
+                response.EnsureSuccessStatusCode();
+                var content = await response.Content.ReadAsStringAsync();
+                content = content.Replace("\"null\"", "null");
+
+                return content;
+            }
+        }
+
+        public async Task<string> PostRequest(string uri, Dictionary<string, string> values)
         {
             using var response = await _httpClient.PostAsync(uri, new FormUrlEncodedContent(values));
             {
@@ -43,5 +65,6 @@ namespace Tradier.Client.Helpers
                 return content;
             }
         }
+
     }
 }
