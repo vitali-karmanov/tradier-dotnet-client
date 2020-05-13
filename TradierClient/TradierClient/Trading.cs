@@ -17,7 +17,7 @@ namespace Tradier.Client
             _requests = requests;
         }
 
-        public async Task<Order> PlaceOptionOrder(string accountNumber, string classOrder, string symbol, string optionSymbol, string side, string quantity, string type, string duration, string? price, string? stop)
+        public async Task<OrderStatus> PlaceOptionOrder(string accountNumber, string classOrder, string symbol, string optionSymbol, string side, string quantity, string type, string duration, string? price, string? stop)
         {
             var data = new Dictionary<string, string>
             {
@@ -32,8 +32,28 @@ namespace Tradier.Client
                 { "stop", stop },
             };
 
-            var response = await _requests.PostContent($"accounts/{accountNumber}/orders", data);
-            return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).Order;
+            var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
+            return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderStatus;
+        }
+
+        public async Task<OrderStatus> ModifyOrder(string accountNumber, string orderId, string? type, string? duration, string? price, string? stop)
+        {
+            var data = new Dictionary<string, string>
+            {
+                { "type", type },
+                { "duration", duration },
+                { "price", price },
+                { "stop", stop },
+            };
+
+            var response = await _requests.PutRequest($"accounts/{accountNumber}/orders/{orderId}", data);
+            return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderStatus;
+        }
+
+        public async Task<OrderStatus> CancelOrder(string accountNumber, string orderId)
+        {
+            var response = await _requests.DeleteRequest($"accounts/{accountNumber}/orders/{orderId}");
+            return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderStatus;
         }
     }
 

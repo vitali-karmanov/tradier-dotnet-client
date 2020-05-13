@@ -5,10 +5,10 @@ namespace Tradier.Client.Models.Trading
     public class OrderResponseRootobject
     {
         [JsonProperty("order")]
-        public Order Order { get; set; }
+        public OrderStatus OrderStatus { get; set; }
     }
 
-    public class Order
+    public class OrderStatus
     {
         [JsonProperty("id")]
         public int Id { get; set; }
