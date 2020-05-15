@@ -31,5 +31,18 @@ namespace Tradier.Client
             return JsonConvert.DeserializeObject<QuoteRootobject>(response).Quotes;
         }
 
+        public async Task<Quotes> PostGetQuotes(List<string> symbols, bool greeks = false)
+        {
+            string strSymbols = String.Join(",", symbols);
+            var data = new Dictionary<string, string>
+            {
+                { "symbols", strSymbols },
+                { "greeks", greeks.ToString() },
+            };
+
+            var response = await _requests.PostRequest($"markets/quotes", data);
+            return JsonConvert.DeserializeObject<QuoteRootobject>(response).Quotes;
+        }
+
     }
 }
