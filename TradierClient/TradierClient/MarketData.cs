@@ -121,5 +121,10 @@ namespace Tradier.Client
             return JsonConvert.DeserializeObject<SecuritiesRootobject>(response).Securities;
         }
 
+        public async Task<Clock> GetClock()
+        {
+            var response = await _requests.GetRequest($"markets/clock");
+            return JsonConvert.DeserializeObject<ClockRootobject>(response).Clock;
+        }
     }
 }
