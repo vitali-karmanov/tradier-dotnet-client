@@ -33,7 +33,7 @@ namespace Tradier.Client
 
         public async Task<Quotes> GetQuotes(string symbols, bool greeks = false)
         {
-            List<string> listSymbols = symbols.Split(',').Select(x=>x.Trim()).ToList();
+            List<string> listSymbols = symbols.Split(',').Select(x => x.Trim()).ToList();
             return await GetQuotes(listSymbols, greeks);
         }
 
@@ -43,6 +43,25 @@ namespace Tradier.Client
 
             var response = await _requests.GetRequest($"markets/quotes?symbols={strSymbols}&greeks={greeks}");
             return JsonConvert.DeserializeObject<QuoteRootobject>(response).Quotes;
+        }
+
+        public async Task<HistoricalQuotes> GetHistoricalQuotes(string symbol, string interval, string start, string end, CultureInfo culture = null)
+        {
+            culture ??= new CultureInfo("en-US");
+            DateTime startDateTime = DateTime.Parse(start, culture); ;
+            DateTime endDateTime = DateTime.Parse(end, culture);
+
+           return await GetHistoricalQuotes(symbol, interval, startDateTime, endDateTime);
+        }
+
+        public async Task<HistoricalQuotes> GetHistoricalQuotes(string symbol, string interval, DateTime start, DateTime end)
+        {
+
+            string stringStart = start.ToString("yyyy-MM-dd");
+            string stringEnd = end.ToString("yyyy-MM-dd");
+
+            var response = await _requests.GetRequest($"markets/history?symbol={symbol}&interval={interval}&start={stringStart}&end={stringEnd}");
+            return JsonConvert.DeserializeObject<HistoricalQuotesRootobject>(response).History;
         }
 
         public async Task<Quotes> PostGetQuotes(string symbols, bool greeks = false)
@@ -73,7 +92,7 @@ namespace Tradier.Client
 
         public async Task<Strikes> GetStrikes(string symbol, DateTime expiration)
         {
-            string stringExpiration= expiration.ToString("yyyy-MM-dd");
+            string stringExpiration = expiration.ToString("yyyy-MM-dd");
             var response = await _requests.GetRequest($"markets/options/strikes?symbol={symbol}&expiration={stringExpiration}");
             return JsonConvert.DeserializeObject<StrikeRootobject>(response).Strikes;
         }
