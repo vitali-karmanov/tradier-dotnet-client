@@ -24,7 +24,7 @@ namespace Tradier.Client.Models.MarketData
         public DateTime Time { get; set; }
 
         [JsonProperty("timestamp")]
-        [JsonConverter(typeof(MillisecondsEpochConverter))]
+        [JsonConverter(typeof(TimestampConverter))]
         public DateTime Timestamp { get; set; }
 
         [JsonProperty("price")]
