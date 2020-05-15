@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Tradier.Client.Helpers;
 using Tradier.Client.Models.MarketData;
@@ -23,12 +24,24 @@ namespace Tradier.Client
             return JsonConvert.DeserializeObject<OptionChainRootobject>(response).Options;
         }
 
+        public async Task<Quotes> GetQuotes(string symbols, bool greeks = false)
+        {
+            List<string> listSymbols = symbols.Split(',').Select(x=>x.Trim()).ToList();
+            return await GetQuotes(listSymbols, greeks);
+        }
+
         public async Task<Quotes> GetQuotes(List<string> symbols, bool greeks = false)
         {
-            string strSymbols = String.Join(",", symbols);
+            string strSymbols = String.Join(",", symbols).Trim();
 
             var response = await _requests.GetRequest($"markets/quotes?symbols={strSymbols}&greeks={greeks}");
             return JsonConvert.DeserializeObject<QuoteRootobject>(response).Quotes;
+        }
+
+        public async Task<Quotes> PostGetQuotes(string symbols, bool greeks = false)
+        {
+            List<string> listSymbols = symbols.Split(',').Select(x => x.Trim()).ToList();
+            return await PostGetQuotes(listSymbols, greeks);
         }
 
         public async Task<Quotes> PostGetQuotes(List<string> symbols, bool greeks = false)
