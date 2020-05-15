@@ -96,6 +96,24 @@ namespace Tradier.Client
             var response = await _requests.GetRequest($"markets/options/strikes?symbol={symbol}&expiration={stringExpiration}");
             return JsonConvert.DeserializeObject<StrikeRootobject>(response).Strikes;
         }
+        
+        public async Task<Series> GetTimeSales(string symbol, string interval, string start, string end, string filter = "all", CultureInfo culture = null)
+        {
+            culture ??= new CultureInfo("en-US");
+            DateTime startDateTime = DateTime.Parse(start, culture);
+            DateTime endDateTime = DateTime.Parse(end, culture);
+
+            return await GetTimeSales(symbol,interval,startDateTime, endDateTime, filter);
+        }
+
+        public async Task<Series> GetTimeSales(string symbol, string interval, DateTime start, DateTime end, string filter = "all")
+        {
+            string stringStart = start.ToString("yyyy-MM-dd HH:mm");
+            string stringEnd = end.ToString("yyyy-MM-dd HH:mm");
+
+            var response = await _requests.GetRequest($"markets/timesales?symbol={symbol}&interval={interval}&start={stringStart}&end={stringEnd}&session_filter={filter}");
+            return JsonConvert.DeserializeObject<SeriesRootobject>(response).Series;
+        }
 
     }
 }
