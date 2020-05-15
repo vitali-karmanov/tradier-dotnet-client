@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
-using System.Linq;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tradier.Client.Helpers;
-using Tradier.Client.Models.Account;
 using Tradier.Client.Models.MarketData;
 
 // ReSharper disable once CheckNamespace
@@ -21,6 +21,14 @@ namespace Tradier.Client
         {
             var response = await _requests.GetRequest($"markets/options/chains?symbol={symbol}&expiration={expiration}&greeks={greeks}");
             return JsonConvert.DeserializeObject<OptionChainRootobject>(response).Options;
+        }
+
+        public async Task<Quotes> GetQuotes(List<string> symbols, bool greeks = false)
+        {
+            string strSymbols = String.Join(",", symbols);
+
+            var response = await _requests.GetRequest($"markets/quotes?symbols={strSymbols}&greeks={greeks}");
+            return JsonConvert.DeserializeObject<QuoteRootobject>(response).Quotes;
         }
 
     }
