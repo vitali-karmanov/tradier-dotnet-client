@@ -12,7 +12,7 @@ namespace Tradier.Client.Models.Account
     public class Balances
     {
         [JsonProperty("option_short_value")]
-        public int OptionShortValue { get; set; }
+        public float OptionShortValue { get; set; }
 
         [JsonProperty("total_equity")]
         public float TotalEquity { get; set; }
@@ -45,13 +45,13 @@ namespace Tradier.Client.Models.Account
         public float OptionLongValue { get; set; }
 
         [JsonProperty("option_requirement")]
-        public int OptionRequirement { get; set; }
+        public float OptionRequirement { get; set; }
 
         [JsonProperty("pending_orders_count")]
         public int PendingOrdersCount { get; set; }
 
         [JsonProperty("short_market_value")]
-        public int ShortMarketValue { get; set; }
+        public float ShortMarketValue { get; set; }
 
         [JsonProperty("stock_long_value")]
         public float StockLongValue { get; set; }
