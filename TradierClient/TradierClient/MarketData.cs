@@ -25,6 +25,12 @@ namespace Tradier.Client
             return JsonConvert.DeserializeObject<OptionChainRootobject>(response).Options;
         }
 
+        public async Task<Expirations> GetOptionExpirations(string symbol, bool? includeAllRoots = false, bool? strikes = false)
+        {
+            var response = await _requests.GetRequest($"markets/options/expirations?symbol={symbol}&includeAllRoots={includeAllRoots}&strikes={strikes}");
+            return JsonConvert.DeserializeObject<ExpirationRootobject>(response).Expirations;
+        }
+
         public async Task<Quotes> GetQuotes(string symbols, bool greeks = false)
         {
             List<string> listSymbols = symbols.Split(',').Select(x=>x.Trim()).ToList();
