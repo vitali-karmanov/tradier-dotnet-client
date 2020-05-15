@@ -55,6 +55,25 @@ namespace Tradier.Client
             var response = await _requests.DeleteRequest($"accounts/{accountNumber}/orders/{orderId}");
             return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderStatus;
         }
+
+        public async Task<OrderStatus> PlaceEquityOrder(string accountNumber, string classOrder, string symbol, string side, string quantity, string type, string duration, string? price, string? stop)
+        {
+            var data = new Dictionary<string, string>
+            {
+                { "account_id", accountNumber },
+                { "class", classOrder },
+                { "symbol", symbol },
+                { "side", side },
+                { "quantity", quantity },
+                { "type", type },
+                { "duration", duration },
+                { "price", price },
+                { "stop", stop },
+            };
+
+            var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
+            return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderStatus;
+        }
     }
 
 }
