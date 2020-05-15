@@ -132,5 +132,11 @@ namespace Tradier.Client
             var response = await _requests.GetRequest($"markets/calendar?month={month}&year={year}");
             return JsonConvert.DeserializeObject<CalendarRootobject>(response).Calendar;
         }
+
+        public async Task<Securities> SearchCompanies(string query, bool indexes = false)
+        {
+            var response = await _requests.GetRequest($"markets/search?q={query}&indexes={indexes}");
+            return JsonConvert.DeserializeObject<SecuritiesRootobject>(response).Securities;
+        }
     }
 }
