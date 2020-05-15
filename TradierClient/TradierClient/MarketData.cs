@@ -48,7 +48,7 @@ namespace Tradier.Client
         public async Task<HistoricalQuotes> GetHistoricalQuotes(string symbol, string interval, string start, string end, CultureInfo culture = null)
         {
             culture ??= new CultureInfo("en-US");
-            DateTime startDateTime = DateTime.Parse(start, culture); ;
+            DateTime startDateTime = DateTime.Parse(start, culture);
             DateTime endDateTime = DateTime.Parse(end, culture);
 
            return await GetHistoricalQuotes(symbol, interval, startDateTime, endDateTime);
