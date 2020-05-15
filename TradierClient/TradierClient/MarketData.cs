@@ -51,7 +51,7 @@ namespace Tradier.Client
             DateTime startDateTime = DateTime.Parse(start, culture);
             DateTime endDateTime = DateTime.Parse(end, culture);
 
-           return await GetHistoricalQuotes(symbol, interval, startDateTime, endDateTime);
+            return await GetHistoricalQuotes(symbol, interval, startDateTime, endDateTime);
         }
 
         public async Task<HistoricalQuotes> GetHistoricalQuotes(string symbol, string interval, DateTime start, DateTime end)
@@ -96,14 +96,14 @@ namespace Tradier.Client
             var response = await _requests.GetRequest($"markets/options/strikes?symbol={symbol}&expiration={stringExpiration}");
             return JsonConvert.DeserializeObject<StrikeRootobject>(response).Strikes;
         }
-        
+
         public async Task<Series> GetTimeSales(string symbol, string interval, string start, string end, string filter = "all", CultureInfo culture = null)
         {
             culture ??= new CultureInfo("en-US");
             DateTime startDateTime = DateTime.Parse(start, culture);
             DateTime endDateTime = DateTime.Parse(end, culture);
 
-            return await GetTimeSales(symbol,interval,startDateTime, endDateTime, filter);
+            return await GetTimeSales(symbol, interval, startDateTime, endDateTime, filter);
         }
 
         public async Task<Series> GetTimeSales(string symbol, string interval, DateTime start, DateTime end, string filter = "all")
@@ -125,6 +125,12 @@ namespace Tradier.Client
         {
             var response = await _requests.GetRequest($"markets/clock");
             return JsonConvert.DeserializeObject<ClockRootobject>(response).Clock;
+        }
+
+        public async Task<Models.MarketData.Calendar> GetCalendar(int? month = null, int? year = null)
+        {
+            var response = await _requests.GetRequest($"markets/calendar?month={month}&year={year}");
+            return JsonConvert.DeserializeObject<CalendarRootobject>(response).Calendar;
         }
     }
 }
