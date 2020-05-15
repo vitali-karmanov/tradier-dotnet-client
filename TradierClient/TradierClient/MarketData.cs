@@ -138,5 +138,11 @@ namespace Tradier.Client
             var response = await _requests.GetRequest($"markets/search?q={query}&indexes={indexes}");
             return JsonConvert.DeserializeObject<SecuritiesRootobject>(response).Securities;
         }
+
+        public async Task<Securities> LookupSymbol(string query, string? exchanges = null, string? types = null)
+        {
+            var response = await _requests.GetRequest($"lookup?q={query}&exchanges={exchanges}&types={types}");
+            return JsonConvert.DeserializeObject<SecuritiesRootobject>(response).Securities;
+        }
     }
 }
