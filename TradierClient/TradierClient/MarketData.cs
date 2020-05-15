@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Tradier.Client.Helpers;
@@ -55,6 +56,20 @@ namespace Tradier.Client
 
             var response = await _requests.PostRequest($"markets/quotes", data);
             return JsonConvert.DeserializeObject<QuoteRootobject>(response).Quotes;
+        }
+
+        public async Task<Strikes> GetStrikes(string symbol, string expiration, CultureInfo culture = null)
+        {
+            culture ??= new CultureInfo("en-US");
+            DateTime expirationDateTime = DateTime.Parse(expiration, culture);
+            return await GetStrikes(symbol, expirationDateTime);
+        }
+
+        public async Task<Strikes> GetStrikes(string symbol, DateTime expiration)
+        {
+            string stringExpiration= expiration.ToString("yyyy-MM-dd");
+            var response = await _requests.GetRequest($"markets/options/strikes?symbol={symbol}&expiration={stringExpiration}");
+            return JsonConvert.DeserializeObject<StrikeRootobject>(response).Strikes;
         }
 
     }
