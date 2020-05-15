@@ -115,5 +115,11 @@ namespace Tradier.Client
             return JsonConvert.DeserializeObject<SeriesRootobject>(response).Series;
         }
 
+        public async Task<Securities> GetEtbSecurities()
+        {
+            var response = await _requests.GetRequest($"markets/etb");
+            return JsonConvert.DeserializeObject<SecuritiesRootobject>(response).Securities;
+        }
+
     }
 }
