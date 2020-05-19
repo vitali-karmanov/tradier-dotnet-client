@@ -18,7 +18,7 @@ namespace Tradier.Client
             _requests = requests;
         }
 
-        public async Task<OrderStatus> PlaceOptionOrder(string accountNumber, string classOrder, string symbol, string optionSymbol, string side, string quantity, string type, string duration, string? price, string? stop)
+        public async Task<OrderStatus> PlaceOptionOrder(string accountNumber, string classOrder, string symbol, string optionSymbol, string side, string quantity, string type, string duration, string? price, string? stop, string? preview)
         {
             var data = new Dictionary<string, string>
             {
@@ -31,6 +31,7 @@ namespace Tradier.Client
                 { "duration", duration },
                 { "price", price },
                 { "stop", stop },
+                { "preview", preview }
             };
 
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
