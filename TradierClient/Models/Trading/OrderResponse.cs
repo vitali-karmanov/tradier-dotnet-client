@@ -27,7 +27,7 @@ namespace Tradier.Client.Models.Trading
         public float? Cost { get; set; }
 
         [JsonProperty("fees")]
-        public int? Fees { get; set; }
+        public float? Fees { get; set; }
 
         [JsonProperty("symbol")]
         public string Symbol { get; set; }
@@ -51,7 +51,7 @@ namespace Tradier.Client.Models.Trading
         public float? OrderCost { get; set; }
 
         [JsonProperty("margin_change")]
-        public int? MarginChange { get; set; }
+        public float? MarginChange { get; set; }
 
         [JsonProperty("request_date")]
         public DateTime? RequestDate { get; set; }
