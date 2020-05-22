@@ -18,7 +18,7 @@ namespace Tradier.Client
             _requests = requests;
         }
 
-        public async Task<IOrder> PlaceOptionOrder(string accountNumber, string classOrder, string symbol, string optionSymbol, string side, string quantity, string type, string duration, string? price, string? stop, string? preview)
+        public async Task<IOrder> PlaceOptionOrder(string accountNumber, string classOrder, string symbol, string optionSymbol, string side, string quantity, string type, string duration, string price = null, string stop = null, string preview = null)
         {
             var data = new Dictionary<string, string>
             {
@@ -47,7 +47,7 @@ namespace Tradier.Client
             }
         }
 
-        public async Task<OrderReponse> PlaceMultilegOrder(string accountNumber, string classOrder, string symbol, string type, string duration, string? price, List<string> optionSymbol, List<string> side, List<string> quantity)
+        public async Task<OrderReponse> PlaceMultilegOrder(string accountNumber, string classOrder, string symbol, string type, string duration, List<string> optionSymbol, List<string> side, List<string> quantity, string price = null)
         {
             var data = new Dictionary<string, string>
             {
@@ -71,7 +71,7 @@ namespace Tradier.Client
             return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
         }
 
-        public async Task<OrderReponse> ModifyOrder(string accountNumber, string orderId, string? type, string? duration, string? price, string? stop)
+        public async Task<OrderReponse> ModifyOrder(string accountNumber, string orderId, string type = null, string duration = null, string price = null, string stop = null)
         {
             var data = new Dictionary<string, string>
             {
@@ -91,7 +91,7 @@ namespace Tradier.Client
             return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
         }
 
-        public async Task<OrderReponse> PlaceEquityOrder(string accountNumber, string classOrder, string symbol, string side, string quantity, string type, string duration, string? price, string? stop)
+        public async Task<OrderReponse> PlaceEquityOrder(string accountNumber, string classOrder, string symbol, string side, string quantity, string type, string duration, string price = null, string stop = null)
         {
             var data = new Dictionary<string, string>
             {
