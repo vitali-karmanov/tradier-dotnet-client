@@ -18,7 +18,7 @@ namespace Tradier.Client
             _requests = requests;
         }
 
-        public async Task<OrderStatus> PlaceOptionOrder(string accountNumber, string classOrder, string symbol, string optionSymbol, string side, string quantity, string type, string duration, string? price, string? stop, string? preview)
+        public async Task<IOrder> PlaceOptionOrder(string accountNumber, string classOrder, string symbol, string optionSymbol, string side, string quantity, string type, string duration, string? price, string? stop, string? preview)
         {
             var data = new Dictionary<string, string>
             {
@@ -35,10 +35,19 @@ namespace Tradier.Client
             };
 
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
-            return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderStatus;
+
+            if (preview != null && preview.Equals("true"))
+            {
+                return JsonConvert.DeserializeObject<OrderPreviewResponseRootobject>(response).OrderPreviewResponse;
+
+            }
+            else
+            {
+                return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
+            }
         }
 
-        public async Task<OrderStatus> PlaceMultilegOrder(string accountNumber, string classOrder, string symbol, string type, string duration, string? price, List<string> optionSymbol, List<string> side, List<string> quantity)
+        public async Task<OrderReponse> PlaceMultilegOrder(string accountNumber, string classOrder, string symbol, string type, string duration, string? price, List<string> optionSymbol, List<string> side, List<string> quantity)
         {
             var data = new Dictionary<string, string>
             {
@@ -59,10 +68,10 @@ namespace Tradier.Client
             quantity.ToList().ForEach(x => data.Add(string.Format("quantity[{0}]", index++), x));
 
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
-            return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderStatus;
+            return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
         }
 
-        public async Task<OrderStatus> ModifyOrder(string accountNumber, string orderId, string? type, string? duration, string? price, string? stop)
+        public async Task<OrderReponse> ModifyOrder(string accountNumber, string orderId, string? type, string? duration, string? price, string? stop)
         {
             var data = new Dictionary<string, string>
             {
@@ -73,16 +82,16 @@ namespace Tradier.Client
             };
 
             var response = await _requests.PutRequest($"accounts/{accountNumber}/orders/{orderId}", data);
-            return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderStatus;
+            return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
         }
 
-        public async Task<OrderStatus> CancelOrder(string accountNumber, string orderId)
+        public async Task<OrderReponse> CancelOrder(string accountNumber, string orderId)
         {
             var response = await _requests.DeleteRequest($"accounts/{accountNumber}/orders/{orderId}");
-            return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderStatus;
+            return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
         }
 
-        public async Task<OrderStatus> PlaceEquityOrder(string accountNumber, string classOrder, string symbol, string side, string quantity, string type, string duration, string? price, string? stop)
+        public async Task<OrderReponse> PlaceEquityOrder(string accountNumber, string classOrder, string symbol, string side, string quantity, string type, string duration, string? price, string? stop)
         {
             var data = new Dictionary<string, string>
             {
@@ -98,7 +107,7 @@ namespace Tradier.Client
             };
 
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
-            return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderStatus;
+            return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
         }
     }
 
