@@ -111,11 +111,11 @@ using Tradier.Client.Models.MarketData;
 #### Get Quotes
 Get a list of symbols using a keyword lookup on the symbols description. Results are in descending order by average volume of the security. This can be used for simple search functions.
 
-You can call GetQuotes passing a comma-separated string with the symbols:
+You can call GetQuotes passing a comma-separated `string` with the symbols:
 ```csharp
 Quotes quotes = await client.MarketData.GetQuotes("AAPL, NFLX");
 ```
-Or you can call GetQuotes passing a List of strings with the symbols:
+Or you can call GetQuotes passing a `List<string>` with the symbols:
 ```csharp
 List<string> symbols = new List<string>();
 symbols.Add("AAPL");
@@ -125,11 +125,11 @@ Quotes quotes = await client.MarketData.GetQuotes(symbols);
 #### Get Quotes (POST method)
 Get a list of symbols using a keyword lookup on the symbols description. Results are in descending order by average volume of the security. This can be used for simple search functions.
 
-You can call PostGetQuotespassing a comma-separated string with the symbols:
+You can call PostGetQuotespassing a comma-separated `string` with the symbols:
 ```csharp
 Quotes quotes = await client.MarketData.PostGetQuotes("AAPL, NFLX");
 ```
-Or you can call PostGetQuotespassing a List of strings with the symbols:
+Or you can call PostGetQuotespassing a `List<string>` with the symbols:
 ```csharp
 List<string> symbols = new List<string>();
 symbols.Add("AAPL");
