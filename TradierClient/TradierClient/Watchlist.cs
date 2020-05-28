@@ -66,5 +66,11 @@ namespace Tradier.Client
             var response = await _requests.PutRequest($"watchlists/{watchlistId}", data);
             return JsonConvert.DeserializeObject<Watchlists>(response);
         }
+
+        public async Task<Watchlists> DeleteWatchlist(string watchlistId)
+        {
+            var response = await _requests.DeleteRequest($"watchlists/{watchlistId}");
+            return JsonConvert.DeserializeObject<WatchlistRootobject>(response).Watchlists;
+        }
     }
 }
