@@ -6,9 +6,9 @@ Tradier .NET Client is a .NET Wrapper for the [Tradier API](https://documentatio
 ## Shortcuts
 
 - [Usage](#usage)
--- [Client](#client)
--- [Account](#account)
--- [Market Data](#market-data)
+    - [Client](#client)
+    - [Account](#account)
+    - [Market Data](#market-data)
 - [Authors](#authors)
 - [Disclaimer](#disclaimer)
 - [License](#license)
