@@ -90,5 +90,11 @@ namespace Tradier.Client
             var response = await _requests.PostRequest($"watchlists/{watchlistId}/symbols", data);
             return JsonConvert.DeserializeObject<Watchlists>(response);
         }
+
+        public async Task<Watchlists> RemoveSymbolFromWatchlist(string watchlistId, string symbol)
+        {
+            var response = await _requests.DeleteRequest($"watchlists/{watchlistId}/symbols/{symbol}");
+            return JsonConvert.DeserializeObject<Watchlists>(response);
+        }
     }
 }
