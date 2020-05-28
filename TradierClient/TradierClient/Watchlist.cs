@@ -19,5 +19,11 @@ namespace Tradier.Client
             var response = await _requests.GetRequest("watchlists");
             return JsonConvert.DeserializeObject<WatchlistRootobject>(response).Watchlists;
         }
+        
+        public async Task<Watchlists> GetWatchlist(string watchlistId)
+        {
+            var response = await _requests.GetRequest($"watchlists/{watchlistId}");
+            return JsonConvert.DeserializeObject<Watchlists>(response);
+        }
     }
 }

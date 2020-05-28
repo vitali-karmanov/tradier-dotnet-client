@@ -28,6 +28,24 @@ namespace Tradier.Client.Models.Watchlist
 
         [JsonProperty("public_id")]
         public string PublicId { get; set; }
+        
+        [JsonProperty("items")]
+        public Items Items { get; set; }
     }
 
+    public class Items
+    {
+        [JsonProperty("item")]
+        [JsonConverter(typeof(SingleOrArrayConverter<Item>))]
+        public List<Item> Item { get; set; }
+    }
+
+    public class Item
+    {
+        [JsonProperty("symbol")]
+        public string Symbol { get; set; }
+        
+        [JsonProperty("id")]
+        public string Id { get; set; }
+    }
 }
