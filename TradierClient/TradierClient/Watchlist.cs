@@ -47,5 +47,24 @@ namespace Tradier.Client
             var response = await _requests.PostRequest($"watchlists", data);
             return JsonConvert.DeserializeObject<Watchlists>(response);
         }
+
+        public async Task<Watchlists> UpdateWatchlist(string watchlistId, string name, string symbols = "")
+        {
+            List<string> listSymbols = symbols?.Split(',').Select(x => x.Trim()).ToList();
+            return await UpdateWatchlist(watchlistId, name, listSymbols);
+        }
+
+        public async Task<Watchlists> UpdateWatchlist(string watchlistId, string name, List<string> symbols = null)
+        {
+            string strSymbols = String.Join(",", symbols);
+            var data = new Dictionary<string, string>
+            {
+                { "name", name },
+                { "symbols", strSymbols },
+            };
+
+            var response = await _requests.PutRequest($"watchlists/{watchlistId}", data);
+            return JsonConvert.DeserializeObject<Watchlists>(response);
+        }
     }
 }
