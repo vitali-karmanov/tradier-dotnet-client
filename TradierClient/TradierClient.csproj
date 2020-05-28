@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="Models\Positions.cs~RF299977a.TMP" />
+    <None Remove="Models\Watchlist\Watchlist.cs~RF4c68ca51.TMP" />
   </ItemGroup>
 
   <ItemGroup>
