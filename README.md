@@ -9,6 +9,7 @@ Tradier .NET Client is a .NET Wrapper for the [Tradier API](https://documentatio
     - [Client](#client)
     - [Account](#account)
     - [Market Data](#market-data)
+    - [Trading](#trading)
 - [Authors](#authors)
 - [Disclaimer](#disclaimer)
 - [License](#license)
@@ -103,7 +104,7 @@ Order order = await client.Account.GetOrder(accountNumber, orderId);
 
 ### Market Data
 Fetch quotes, chains and historical data.
-For all the market data related usages, make sure you include the Account Model namespace:
+For all the market data related usages, make sure you include the MarketData Model namespace:
 ```csharp
 using Tradier.Client.Models.MarketData;
 ```
@@ -120,6 +121,7 @@ Or you can call GetQuotes passing a `List<string>` with the symbols:
 List<string> symbols = new List<string>();
 symbols.Add("AAPL");
 symbols.Add("NFLX");
+
 Quotes quotes = await client.MarketData.GetQuotes(symbols);
 ```
 #### Get Quotes (POST method)
@@ -129,11 +131,12 @@ You can call PostGetQuotespassing a comma-separated `string` with the symbols:
 ```csharp
 Quotes quotes = await client.MarketData.PostGetQuotes("AAPL, NFLX");
 ```
-Or you can call PostGetQuotespassing a `List<string>` with the symbols:
+Or you can call PostGetQuotes passing a `List<string>` with the symbols:
 ```csharp
 List<string> symbols = new List<string>();
 symbols.Add("AAPL");
 symbols.Add("NFLX");
+
 Quotes quotes = await client.MarketData.PostGetQuotes(symbols);
 ```
 
@@ -233,6 +236,59 @@ Search for a symbol using the ticker symbol or partial symbol. Results are in de
 
 ```csharp
 Securities lookup = await client.MarketData.LookupSymbol("goog");
+```
+
+### Trading
+Place equity and complex option trades including advanced orders.
+For all the trading related usages, make sure you include the Trading Model namespace:
+```csharp
+using Tradier.Client.Models.Trading;
+```
+
+#### Place Equity Order
+Place an order to trade an equity security.
+```csharp
+OrderReponse order = 
+	await client.Trading.PlaceEquityOrder(accountNumber, "equity", "AAPL", "buy", "10", "market", "day", "1.00", "1.00");
+```
+
+#### Place Option Order
+Place an order to trade a single option.
+```csharp
+IOrder order = 
+	await client.Trading.PlaceOptionOrder(accountNumber, "option", "SPY", "SPY140118C00195000", "buy_to_open", "10", "market", "day", "1.00", "1.00", preview: true);
+```
+
+#### Place Multileg Order
+Place a multileg order with up to 4 legs.
+```csharp
+List<string> optionSymbols = new List<string>();
+optionSymbols.Add("SPY190605C00282000");
+optionSymbols.Add("SPY190605C00286000");
+
+List<string> sides = new List<string>();
+sides.Add("buy_to_open");
+sides.Add("buy_to_close");
+
+List<string> quantities = new List<string>();
+sides.Add("10");
+sides.Add("10");
+
+OrderReponse order = 
+	await client.Trading.PlaceMultilegOrder(accountNumber, "option", "AAPL", "market", "day", "1.00", optionSymbols, sides, quantities);
+```
+
+#### Modify Order
+Modify an order. You may change some or all of these parameters. You may not change the session of a pre/post market session order. Send only the parameters you would like to adjust.
+```csharp
+OrderReponse order = 
+	await client.Trading.ModifyOrder(accountNumber, orderId, "limit", "day", "1.00", "1.00");
+```
+
+#### Cancel Order
+Cancel an order.
+```csharp
+OrderReponse order = await client.Trading.CancelOrder(accountNumber, orderId);
 ```
 
 ## Authors
