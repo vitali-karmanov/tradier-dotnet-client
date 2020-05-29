@@ -60,10 +60,8 @@ Quotes quotes = await client.MarketData.PostGetQuotes("AAPL, NFLX");
 Options options = await client.MarketData.GetOptionChain("AAPL", "2020-05-27");
 Expirations expirations = await client.MarketData.GetOptionExpirations("AAPL");
 Strikes strikes = await client.MarketData.GetStrikes("UNG", "May 15, 2020");
-HistoricalQuotes historicalQuotes = 
-	await client.MarketData.GetHistoricalQuotes("AAPL", "daily", "January 1, 2020", "May 15, 2020");
-Series timeSales = 
-	await client.MarketData.GetTimeSales("AAPL", "1min", "May 1, 2020", "May 15, 2020");
+HistoricalQuotes historicalQuotes = await client.MarketData.GetHistoricalQuotes("AAPL", "daily", "January 1, 2020", "May 15, 2020");
+Series timeSales = await client.MarketData.GetTimeSales("AAPL", "1min", "May 1, 2020", "May 15, 2020");
 Securities securities = await client.MarketData.GetEtbSecurities();
 Clock clock = await client.MarketData.GetClock();
 Calendar calendar = await client.MarketData.GetCalendar();
@@ -71,56 +69,13 @@ Securities securitiesFilter = await client.MarketData.SearchCompanies("NY");
 Securities lookup = await client.MarketData.LookupSymbol("goog");
 
 ```
-### Trading
-Place equity and complex option trades including advanced orders.
-For all the trading related usages, make sure you include the Trading Model namespace:
+#### Trading
+
 ```csharp
-using Tradier.Client.Models.Trading;
-```
-
-#### Place Equity Order
-Place an order to trade an equity security.
-```csharp
-OrderReponse order = 
-	await client.Trading.PlaceEquityOrder(accountNumber, "equity", "AAPL", "buy", "10", "market", "day", "1.00", "1.00");
-```
-
-#### Place Option Order
-Place an order to trade a single option.
-```csharp
-IOrder order = 
-	await client.Trading.PlaceOptionOrder(accountNumber, "option", "SPY", "SPY140118C00195000", "buy_to_open", "10", "market", "day", "1.00", "1.00", preview: true);
-```
-
-#### Place Multileg Order
-Place a multileg order with up to 4 legs.
-```csharp
-List<string> optionSymbols = new List<string>();
-optionSymbols.Add("SPY190605C00282000");
-optionSymbols.Add("SPY190605C00286000");
-
-List<string> sides = new List<string>();
-sides.Add("buy_to_open");
-sides.Add("buy_to_close");
-
-List<string> quantities = new List<string>();
-sides.Add("10");
-sides.Add("10");
-
-OrderReponse order = 
-	await client.Trading.PlaceMultilegOrder(accountNumber, "option", "AAPL", "market", "day", "1.00", optionSymbols, sides, quantities);
-```
-
-#### Modify Order
-Modify an order. You may change some or all of these parameters. You may not change the session of a pre/post market session order. Send only the parameters you would like to adjust.
-```csharp
-OrderReponse order = 
-	await client.Trading.ModifyOrder(accountNumber, orderId, "limit", "day", "1.00", "1.00");
-```
-
-#### Cancel Order
-Cancel an order.
-```csharp
+OrderReponse order = await client.Trading.PlaceEquityOrder(accountNumber, "equity", "AAPL", "buy", "10", "market", "day", "1.00", "1.00");
+OrderReponse order = await client.Trading.PlaceOptionOrder(accountNumber, "option", "SPY", "SPY140118C00195000", "buy_to_open", "10", "market", "day", "1.00", "1.00", preview: true);
+OrderReponse order = await client.Trading.PlaceMultilegOrder("VA54583566", "multileg", "MFA", "credit", "day", "0.10", new List<string> { "MFA200717C00002000", "MFA200717C00003000"}, new List<string> { "sell_to_open", "buy_to_open" } , new List<string> { "1", "1"});
+OrderReponse order = await client.Trading.ModifyOrder(accountNumber, orderId, "limit", "day", "1.00", "1.00");
 OrderReponse order = await client.Trading.CancelOrder(accountNumber, orderId);
 ```
 
