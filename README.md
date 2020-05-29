@@ -5,7 +5,7 @@ Tradier .NET Client is a .NET Library for the [Tradier API](https://documentatio
 
 In order to use this client you will need to have an Access Token from Tradier for either the [Developer Sandbox](https://developer.tradier.com/user/sign_up) or the [Brokerage Account](https://documentation.tradier.com/brokerage-api).
 
-## Add the Client
+## Include the Client
 
 To implement the Library into your project, install [NuGet package]() into your solution/project by running it in the Package Manager Console.
 ````
