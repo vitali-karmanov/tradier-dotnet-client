@@ -39,6 +39,12 @@ TradierClient client = new TradierClient("<TOKEN>", useProduction: true);
 
 *Note that it is not needed to pass a `HttpClient` to the client. TradierClient already creates one using the `HttpClientFactory` helping it to keep control over the requests.*
 
+<br/>
+<div align="right">
+    <b><a href="#tradier-net-client">↥ back to top</a></b>
+</div>
+<br/>
+
 ### Account
 Fetch positions, balances and other account related details.
 For all the account-related usages, make sure you include the Account Model namespace:
@@ -101,6 +107,12 @@ Get detailed information about a previously placed order.
 ```csharp
 Order order = await client.Account.GetOrder(accountNumber, orderId);
 ```
+
+<br/>
+<div align="right">
+    <b><a href="#tradier-net-client">↥ back to top</a></b>
+</div>
+<br/>
 
 ### Market Data
 Fetch quotes, chains and historical data.
@@ -238,6 +250,12 @@ Search for a symbol using the ticker symbol or partial symbol. Results are in de
 Securities lookup = await client.MarketData.LookupSymbol("goog");
 ```
 
+<br/>
+<div align="right">
+    <b><a href="#tradier-net-client">↥ back to top</a></b>
+</div>
+<br/>
+
 ### Trading
 Place equity and complex option trades including advanced orders.
 For all the trading related usages, make sure you include the Trading Model namespace:
@@ -290,6 +308,12 @@ Cancel an order.
 ```csharp
 OrderReponse order = await client.Trading.CancelOrder(accountNumber, orderId);
 ```
+
+<br/>
+<div align="right">
+    <b><a href="#tradier-net-client">↥ back to top</a></b>
+</div>
+<br/>
 
 ## Authors
 
