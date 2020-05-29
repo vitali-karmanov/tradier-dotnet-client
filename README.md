@@ -106,4 +106,4 @@ Watchlists deleteWatclist = await client.Watchlist.DeleteWatchlist("my-watchlist
 This Wrapper is NOT an official .NET Tradier Library. This library is provided "as is" without expressed or implied warranty of any kind. Please use at your own risk and discretion.
 
 ## License
-This Library is provided under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details
+This Library is provided under the Apache 2.0 License - see the [LICENSE](https://github.com/vitali-karmanov/tradier-dotnet-client/blob/master/LICENSE) file for details
