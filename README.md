@@ -7,7 +7,7 @@ In order to use this client you will need to have an Access Token from Tradier f
 
 ## Create the Client
 
-To implement the Library into your project, install [NuGet package]() into your solution/project by running in the Package Manager Console.
+To implement the Library into your project, install [NuGet package]() into your solution/project by running it in the Package Manager Console.
 ````
 PM> Install-Package TradierDotNetClient
 ````
@@ -39,7 +39,7 @@ TradierClient client = new TradierClient("<TOKEN>", useProduction: true);
 
 ## Use the Client
 
-The client is separeted into different sections and follows the [API documentation](https://documentation.tradier.com/) outline. Below are described all the supported API calls for each section. For more information refere to [Wiki](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki).
+The client is separated into different sections and follows the [API documentation](https://documentation.tradier.com/) outline. Below are described all the supported API calls for each section. For more information refer to [Wiki](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki).
 
 ### [Account](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki/Using-Account-methods)
 ```csharp
