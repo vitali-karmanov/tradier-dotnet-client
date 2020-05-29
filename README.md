@@ -1,43 +1,36 @@
 
 # Tradier .NET Client
 
-Tradier .NET Client is a .NET Wrapper for the [Tradier API](https://documentation.tradier.com/) to interact with the Tradier Brokerage platform to get account information, market data, place orders, and create watchlists. The use of this client eases the programmability decreasing the number of hours of development, helping you to finish your project sooner or use your time into creating more solutions.
+Tradier .NET Client is a .NET Library for the [Tradier API](https://documentation.tradier.com/) to interact with the Tradier Brokerage platform to get account information, market data, place orders, and create watchlists. 
 
-## Shortcuts
-
-- [Usage](#usage)
-    - [Client](#client)
-    - [Account](#account)
-    - [Market Data](#market-data)
-    - [Trading](#trading)
-- [Authors](#authors)
-- [Disclaimer](#disclaimer)
-- [License](#license)
+In order to use this client you will need to have an Access Token from Tradier for either the [Developer Sandbox](https://developer.tradier.com/user/sign_up) or the [Brokerage Account](https://documentation.tradier.com/brokerage-api).
 
 ## Usage
 
-To implement the Library into your project, make sure you installed the corresponding [NuGet package]() into your solution/project:
+To implement the Library into your project, install [NuGet package]() into your solution/project by running in the Package Manager Console.
 ````
-PM> Install-Package TradierClient
+PM> Install-Package TradierDotNetClient
 ````
-Once installed, make sure you include the Client by entering the `Tradier.Client` namespace.
+Or by searching TradierDotNetClient in the Package Manager searching bar.
 
 ### Client
-To implement the client into your project, use the namespace and the statement below:
+To implement the client into your project, include the `Tradier.Client` namespace:
 ```csharp
 using Tradier.Client;
+```
 
+To instantiate a new client in your program, include the following:
+
+```csharp
 TradierClient client = new TradierClient("<TOKEN>");
 ```
-Additionally, the client is default set to point to Sandbox. To point the client to Production, you need to explicitly set it to Production:
+**On an important note**, the client's constructor default setting is to use the Developer Sandbox. To set the client to Brokerage Account, you need to explicitly set it to Production by including the property `useProduction` and set it to true:
 
 ```csharp
-using Tradier.Client;
-
 TradierClient client = new TradierClient("<TOKEN>", useProduction: true);
 ```
 
-*Note that it is not needed to pass a `HttpClient` to the client. TradierClient already creates one using the `HttpClientFactory` helping it to keep control over the requests.*
+*Note that it is not needed to pass a `HttpClient` to the client. TradierDotNetClient already creates one using the `HttpClientFactory` helping it to keep control over the requests.*
 
 <br/>
 <div align="right">
