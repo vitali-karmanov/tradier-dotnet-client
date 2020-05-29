@@ -41,7 +41,7 @@ TradierClient client = new TradierClient("<TOKEN>", useProduction: true);
 
 The client is separeted into different sections and follows the [API documentation](https://documentation.tradier.com/) outline. Below are described all the supported API calls for each section. For more information refere to [Wiki](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki).
 
-### Account
+### [Account](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki/Using-Account-methods)
 ```csharp
 Profile userProfile = await client.Account.GetUserProfile();
 Balances balance = await client.Account.GetBalances(accountNumber);
@@ -94,4 +94,4 @@ OrderReponse order = await client.Trading.CancelOrder(accountNumber, orderId);
 This Wrapper is NOT an official .NET Tradier Library. This library is provided "as is" without expressed or implied warranty of any kind. Please use at your own risk and discretion.
 
 ## License
-This Library is provided under the [MIT License](https://raw.github.com/sta/websocket-sharp/master/LICENSE.txt).
+This Library is provided under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details
