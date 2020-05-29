@@ -52,7 +52,7 @@ Orders orders = await client.Account.GetOrders(accountNumber);
 Order order = await client.Account.GetOrder(accountNumber, orderId);
 ```
 
-### Market Data
+### [Market Data](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki/Using-Market-Data-methods)
 ```csharp
 Quotes quotes = await client.MarketData.GetQuotes("AAPL, NFLX");
 Quotes quotes = await client.MarketData.PostGetQuotes("AAPL, NFLX");
@@ -68,7 +68,7 @@ Securities securitiesFilter = await client.MarketData.SearchCompanies("NY");
 Securities lookup = await client.MarketData.LookupSymbol("goog");
 
 ```
-### Trading
+### [Trading](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki/Using-Trading-methods)
 
 ```csharp
 OrderReponse order = await client.Trading.PlaceEquityOrder(accountNumber, "equity", "AAPL", "buy", "10", "market", "day", "1.00", "1.00");
@@ -76,6 +76,18 @@ OrderReponse order = await client.Trading.PlaceOptionOrder(accountNumber, "optio
 OrderReponse order = await client.Trading.PlaceMultilegOrder("VA54583566", "multileg", "MFA", "credit", "day", "0.10", new List<string> { "MFA200717C00002000", "MFA200717C00003000"}, new List<string> { "sell_to_open", "buy_to_open" } , new List<string> { "1", "1"});
 OrderReponse order = await client.Trading.ModifyOrder(accountNumber, orderId, "limit", "day", "1.00", "1.00");
 OrderReponse order = await client.Trading.CancelOrder(accountNumber, orderId);
+```
+
+### [Watchlist](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki/Using-Watchlist-methods)
+
+```csharp
+Watchlists watchlists = await client.Watchlist.GetWatchlists();
+Watchlists dafaultWatchlist = await client.Watchlist.GetWatchlist("<WATCHLIST_ID>");
+Watchlists newWatchlist = await client.Watchlist.CreateWatchlist("My Watchlist", "AAPL,IBM");
+Watchlists updatedWatchlist = await client.Watchlist.UpdateWatchlist("my-watchlist", "My First Watchlist", "SPY");
+await client.Watchlist.AddSymbolsToWatchlist("my-watchlist", "NFLX");
+await client.Watchlist.RemoveSymbolFromWatchlist("my-watchlist", "AAPL");
+Watchlists deleteWatclist = await client.Watchlist.DeleteWatchlist("my-watchlist");
 ```
 
 <br/>
