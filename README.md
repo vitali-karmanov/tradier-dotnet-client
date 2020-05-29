@@ -5,7 +5,7 @@ Tradier .NET Client is a .NET Library for the [Tradier API](https://documentatio
 
 In order to use this client you will need to have an Access Token from Tradier for either the [Developer Sandbox](https://developer.tradier.com/user/sign_up) or the [Brokerage Account](https://documentation.tradier.com/brokerage-api).
 
-## Usage
+## Create the Client
 
 To implement the Library into your project, install [NuGet package]() into your solution/project by running in the Package Manager Console.
 ````
@@ -13,7 +13,6 @@ PM> Install-Package TradierDotNetClient
 ````
 Or by searching TradierDotNetClient in the Package Manager searching bar.
 
-### Create the Client
 To implement the client into your project, include the `Tradier.Client` namespace:
 ```csharp
 using Tradier.Client;
@@ -38,11 +37,11 @@ TradierClient client = new TradierClient("<TOKEN>", useProduction: true);
 </div>
 <br/>
 
-### Use the Client
+## Use the Client
 
 The client is separeted into different sections and follows the [API documentation](https://documentation.tradier.com/) outline. Below are described all the supported API calls for each section. For more information refere to [Wiki](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki).
 
-#### Account
+### Account
 ```csharp
 Profile userProfile = await client.Account.GetUserProfile();
 Balances balance = await client.Account.GetBalances(accountNumber);
@@ -53,7 +52,7 @@ Orders orders = await client.Account.GetOrders(accountNumber);
 Order order = await client.Account.GetOrder(accountNumber, orderId);
 ```
 
-#### Market Data
+### Market Data
 ```csharp
 Quotes quotes = await client.MarketData.GetQuotes("AAPL, NFLX");
 Quotes quotes = await client.MarketData.PostGetQuotes("AAPL, NFLX");
@@ -69,7 +68,7 @@ Securities securitiesFilter = await client.MarketData.SearchCompanies("NY");
 Securities lookup = await client.MarketData.LookupSymbol("goog");
 
 ```
-#### Trading
+### Trading
 
 ```csharp
 OrderReponse order = await client.Trading.PlaceEquityOrder(accountNumber, "equity", "AAPL", "buy", "10", "market", "day", "1.00", "1.00");
