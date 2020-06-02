@@ -8,7 +8,7 @@ namespace Tradier.Client
 {
     public class TradierClient
     {
-        static readonly HttpClient _httpClient = new HttpClient();
+        private readonly HttpClient _httpClient = new HttpClient();
         public Account Account { get; set; }
         public MarketData MarketData { get; set; }
         public Trading Trading { get; set; }
