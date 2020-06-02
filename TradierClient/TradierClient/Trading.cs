@@ -47,7 +47,7 @@ namespace Tradier.Client
             }
         }
 
-        public async Task<OrderReponse> PlaceMultilegOrder(string accountNumber, string classOrder, string symbol, string type, string duration, List<string> optionSymbol, List<string> side, List<string> quantity, string price = null)
+        public async Task<OrderReponse> PlaceMultilegOrder(string accountNumber, string classOrder, string symbol, string type, string duration, List<Tuple<string, string, int>> legs, string price = null)
         {
             var data = new Dictionary<string, string>
             {
@@ -59,13 +59,15 @@ namespace Tradier.Client
             };
 
             int index = 0;
-            optionSymbol.ToList().ForEach(x => data.Add(string.Format("option_symbol[{0}]", index++), x));
 
-            index = 0;
-            side.ToList().ForEach(x => data.Add(string.Format("side[{0}]", index++), x));
+            foreach (var leg in legs)
+            {
+                data.Add($"option_symbol[{index}]", leg.Item1);
+                data.Add($"side[{index}]", leg.Item2);
+                data.Add($"quantity[{index}]", leg.Item3.ToString());
 
-            index = 0;
-            quantity.ToList().ForEach(x => data.Add(string.Format("quantity[{0}]", index++), x));
+                index++;
+            }
 
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
             return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
