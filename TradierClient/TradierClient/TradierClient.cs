@@ -1,6 +1,6 @@
 ﻿using System;
-using Microsoft.Extensions.Http;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using Tradier.Client.Helpers;
 
 // ReSharper disable once CheckNamespace
@@ -8,6 +8,7 @@ namespace Tradier.Client
 {
     public class TradierClient
     {
+        static readonly HttpClient _httpClient = new HttpClient();
         public Account Account { get; set; }
         public MarketData MarketData { get; set; }
         public Trading Trading { get; set; }
@@ -17,14 +18,11 @@ namespace Tradier.Client
         {
             Uri baseEndpoint = useProduction ? new Uri(Settings.PRODUCTION_ENDPOINT) : new Uri(Settings.SANDBOX_ENDPOINT);
 
-            HttpClientFactory httpClientFactory = new HttpClientFactory();
-            httpClientFactory.Register("TradierClient", builder => builder
-            .ConfigureHttpClient(c => c.BaseAddress = baseEndpoint)
-            .ConfigureHttpClient(c => c.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}"))
-            .ConfigureHttpClient(c => c.DefaultRequestHeaders.Add("Accept", "application/json")));
+            _httpClient.BaseAddress = baseEndpoint;
+            _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
+            _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
 
-            HttpClient httpClient = httpClientFactory.CreateClient("TradierClient");
-            Requests request = new Requests(httpClient);
+            Requests request = new Requests(_httpClient);
 
             Account = new Account(request);
             MarketData = new MarketData(request);
