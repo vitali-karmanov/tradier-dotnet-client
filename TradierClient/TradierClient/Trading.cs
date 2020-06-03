@@ -111,6 +111,33 @@ namespace Tradier.Client
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
             return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
         }
+
+        public async Task<OrderReponse> PlaceComboOrder(string accountNumber, string symbol, string type, string duration, List<Tuple<string, string, int>> legs, string price = null)
+        {
+            var data = new Dictionary<string, string>
+            {
+                { "class", "combo" },
+                { "symbol", symbol },
+                { "type", type },
+                { "duration", duration },
+                { "price", price },
+            };
+
+            int index = 0;
+
+            foreach (var leg in legs)
+            {
+                data.Add($"option_symbol[{index}]", leg.Item1);
+                data.Add($"side[{index}]", leg.Item2);
+                data.Add($"quantity[{index}]", leg.Item3.ToString());
+
+                index++;
+            }
+
+            var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
+            return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
+        }
     }
+}
 
 }
