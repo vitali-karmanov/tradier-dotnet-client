@@ -7,11 +7,12 @@ namespace Tradier.Client
 {
     public class TradierClient
     {
+        public Authentication Authentication { get; set; }
         public Account Account { get; set; }
         public MarketData MarketData { get; set; }
         public Trading Trading { get; set; }
         public Watchlist Watchlist { get; set; }
-        
+
         // TODO: We need a non-sandbox account to make this work
         //public Streaming Streaming { get; set; }
 
@@ -30,6 +31,7 @@ namespace Tradier.Client
 
             Requests request = new Requests(httpClient);
 
+            Authentication = new Authentication(request);
             Account = new Account(request);
             MarketData = new MarketData(request);
             Trading = new Trading(request);
