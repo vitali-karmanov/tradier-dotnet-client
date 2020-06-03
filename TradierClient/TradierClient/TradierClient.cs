@@ -13,7 +13,7 @@ namespace Tradier.Client
         public Trading Trading { get; set; }
         public Watchlist Watchlist { get; set; }
 
-        // TODO: We need a non-sandbox account to make this work
+        // TODO: Coming soon
         //public Streaming Streaming { get; set; }
 
         public TradierClient(string apiToken, bool useProduction = false)
@@ -37,7 +37,7 @@ namespace Tradier.Client
             Trading = new Trading(request);
             Watchlist = new Watchlist(request);
 
-            // TODO: We need a non-sandbox account to make this work
+            // TODO: Coming soon
             //Streaming = new Streaming(request);
         }
 
