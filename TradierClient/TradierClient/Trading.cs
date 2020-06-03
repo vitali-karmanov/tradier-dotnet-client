@@ -137,5 +137,32 @@ namespace Tradier.Client
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
             return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
         }
+
+        public async Task<OrderReponse> PlaceOtoOrder(string accountNumber, string duration, List<Tuple<string, int, string, string, string, double?, double?>> legs)
+        {
+            var data = new Dictionary<string, string>
+            {
+                { "class", "oto" },
+                { "duration", duration },
+            };
+
+            int index = 0;
+
+            foreach (var leg in legs)
+            {
+                data.Add($"symbol[{index}]", leg.Item1);
+                data.Add($"quantity[{index}]", leg.Item2.ToString());
+                data.Add($"type[{index}]", leg.Item3);
+                data.Add($"option_symbol[{index}]", leg.Item4);
+                data.Add($"side[{index}]", leg.Item5);
+                data.Add($"price[{index}]", leg.Item6.Value == null ? "" : leg.Item6.ToString());
+                data.Add($"stop[{index}]", leg.Item7.Value == null ? "" : leg.Item7.ToString());
+                
+                index++;
+            }
+
+            var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
+            return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
+        }
     }
 }
