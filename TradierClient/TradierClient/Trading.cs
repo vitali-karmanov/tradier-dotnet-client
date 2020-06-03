@@ -17,7 +17,7 @@ namespace Tradier.Client
             _requests = requests;
         }
 
-        public async Task<IOrder> PlaceOptionOrder(string accountNumber, string symbol, string optionSymbol, string side, string quantity, string type, string duration, string price = null, string stop = null, string preview = null)
+        public async Task<IOrder> PlaceOptionOrder(string accountNumber, string symbol, string optionSymbol, string side, int quantity, string type, string duration, double? price = null, double? stop = null, string preview = null)
         {
             var data = new Dictionary<string, string>
             {
@@ -25,11 +25,11 @@ namespace Tradier.Client
                 { "symbol", symbol },
                 { "option_symbol", optionSymbol },
                 { "side", side },
-                { "quantity", quantity },
+                { "quantity", quantity.ToString() },
                 { "type", type },
                 { "duration", duration },
-                { "price", price },
-                { "stop", stop },
+                { "price", price.ToString() },
+                { "stop", stop.ToString() },
                 { "preview", preview }
             };
 
@@ -46,7 +46,7 @@ namespace Tradier.Client
             }
         }
 
-        public async Task<OrderReponse> PlaceMultilegOrder(string accountNumber, string symbol, string type, string duration, List<Tuple<string, string, int>> legs, string price = null)
+        public async Task<OrderReponse> PlaceMultilegOrder(string accountNumber, string symbol, string type, string duration, List<Tuple<string, string, int>> legs, double? price = null)
         {
             var data = new Dictionary<string, string>
             {
@@ -54,7 +54,7 @@ namespace Tradier.Client
                 { "symbol", symbol },
                 { "type", type },
                 { "duration", duration },
-                { "price", price }
+                { "price", price.ToString() }
             };
 
             int index = 0;
@@ -92,7 +92,7 @@ namespace Tradier.Client
             return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
         }
 
-        public async Task<OrderReponse> PlaceEquityOrder(string accountNumber, string symbol, string side, string quantity, string type, string duration, string price = null, string stop = null)
+        public async Task<OrderReponse> PlaceEquityOrder(string accountNumber, string symbol, string side, int quantity, string type, string duration, double? price = null, double? stop = null)
         {
             var data = new Dictionary<string, string>
             {
@@ -100,18 +100,18 @@ namespace Tradier.Client
                 { "class", "equity" },
                 { "symbol", symbol },
                 { "side", side },
-                { "quantity", quantity },
+                { "quantity", quantity.ToString()},
                 { "type", type },
                 { "duration", duration },
-                { "price", price },
-                { "stop", stop },
+                { "price", price.ToString() },
+                { "stop", stop.ToString() },
             };
 
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
             return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
         }
 
-        public async Task<OrderReponse> PlaceComboOrder(string accountNumber, string symbol, string type, string duration, List<Tuple<string, string, int>> legs, string price = null)
+        public async Task<OrderReponse> PlaceComboOrder(string accountNumber, string symbol, string type, string duration, List<Tuple<string, string, int>> legs, double? price = null)
         {
             var data = new Dictionary<string, string>
             {
@@ -119,7 +119,7 @@ namespace Tradier.Client
                 { "symbol", symbol },
                 { "type", type },
                 { "duration", duration },
-                { "price", price },
+                { "price", price.ToString() },
             };
 
             int index = 0;

@@ -19,6 +19,12 @@ namespace Tradier.Client
             _requests = requests;
         }
 
+        public async Task<Options> GetOptionChain(string symbol, DateTime expiration, bool greeks = false)
+        {
+            string stringExpiration = expiration.ToString("yyyy-MM-dd");
+            return await GetOptionChain(symbol, stringExpiration, greeks);
+        }
+
         public async Task<Options> GetOptionChain(string symbol, string expiration, bool greeks = false)
         {
             var response = await _requests.GetRequest($"markets/options/chains?symbol={symbol}&expiration={expiration}&greeks={greeks}");
@@ -143,6 +149,12 @@ namespace Tradier.Client
         {
             var response = await _requests.GetRequest($"lookup?q={query}&exchanges={exchanges}&types={types}");
             return JsonConvert.DeserializeObject<SecuritiesRootobject>(response).Securities;
+        }
+
+        public async Task<List<Symbol>> LookupOptionSymbols(string symbol)
+        {
+            var response = await _requests.GetRequest($"markets/options/lookup?underlying={symbol}");
+            return JsonConvert.DeserializeObject<SymbolsRootobject>(response).Symbols;
         }
     }
 }
