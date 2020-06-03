@@ -54,9 +54,9 @@ namespace Tradier.Client.Helpers
             }
         }
 
-        public async Task<string> PostRequest(string uri, Dictionary<string, string> values)
+        public async Task<string> PostRequest(string uri, Dictionary<string, string> values = null)
         {
-            using var response = await _httpClient.PostAsync(uri, new FormUrlEncodedContent(values));
+            using var response = await _httpClient.PostAsync(uri, values == null ? null : new FormUrlEncodedContent(values));
             {
                 response.EnsureSuccessStatusCode();
                 var content = await response.Content.ReadAsStringAsync();
