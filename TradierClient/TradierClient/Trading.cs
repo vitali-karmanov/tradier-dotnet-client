@@ -139,5 +139,3 @@ namespace Tradier.Client
         }
     }
 }
-
-}
