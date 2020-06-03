@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using Tradier.Client.Helpers;
 
 // ReSharper disable once CheckNamespace
