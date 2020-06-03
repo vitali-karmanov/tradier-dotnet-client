@@ -1,12 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Tradier.Client.Helpers;
 using Tradier.Client.Models.Trading;
 
+// ReSharper disable once CheckNamespace
 namespace Tradier.Client
 {
     public class Trading
@@ -18,11 +17,11 @@ namespace Tradier.Client
             _requests = requests;
         }
 
-        public async Task<IOrder> PlaceOptionOrder(string accountNumber, string classOrder, string symbol, string optionSymbol, string side, string quantity, string type, string duration, string price = null, string stop = null, string preview = null)
+        public async Task<IOrder> PlaceOptionOrder(string accountNumber, string symbol, string optionSymbol, string side, string quantity, string type, string duration, string price = null, string stop = null, string preview = null)
         {
             var data = new Dictionary<string, string>
             {
-                { "class", classOrder },
+                { "class", "option" },
                 { "symbol", symbol },
                 { "option_symbol", optionSymbol },
                 { "side", side },
@@ -47,11 +46,11 @@ namespace Tradier.Client
             }
         }
 
-        public async Task<OrderReponse> PlaceMultilegOrder(string accountNumber, string classOrder, string symbol, string type, string duration, List<Tuple<string, string, int>> legs, string price = null)
+        public async Task<OrderReponse> PlaceMultilegOrder(string accountNumber, string symbol, string type, string duration, List<Tuple<string, string, int>> legs, string price = null)
         {
             var data = new Dictionary<string, string>
             {
-                { "class", classOrder },
+                { "class", "multileg" },
                 { "symbol", symbol },
                 { "type", type },
                 { "duration", duration },
@@ -93,12 +92,12 @@ namespace Tradier.Client
             return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
         }
 
-        public async Task<OrderReponse> PlaceEquityOrder(string accountNumber, string classOrder, string symbol, string side, string quantity, string type, string duration, string price = null, string stop = null)
+        public async Task<OrderReponse> PlaceEquityOrder(string accountNumber, string symbol, string side, string quantity, string type, string duration, string price = null, string stop = null)
         {
             var data = new Dictionary<string, string>
             {
                 { "account_id", accountNumber },
-                { "class", classOrder },
+                { "class", "equity" },
                 { "symbol", symbol },
                 { "side", side },
                 { "quantity", quantity },
