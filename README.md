@@ -1,4 +1,4 @@
-![Tradier .NET Client - Deploy](https://github.com/vitali-karmanov/tradier-dotnet-client/workflows/Tradier%20.NET%20Client%20-%20Deploy/badge.svg?branch=master)
+[![NuGet](https://img.shields.io/nuget/v/tradier-dotnet-client.svg)](https://www.nuget.org/packages/tradier-dotnet-client/)
 
 # Tradier .NET Client
 
