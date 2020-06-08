@@ -4,6 +4,17 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <langversion>8</langversion>
     <RootNamespace>Tradier.Client</RootNamespace>
+    <PackageId>tradier-dotnet-client</PackageId>
+    <Authors>Vitali Karmanov, Henrique Tedeschi</Authors>
+    <Company />
+    <PackageLicenseExpression>Apache 2.0</PackageLicenseExpression>
+    <PackageProjectUrl></PackageProjectUrl>
+    <RepositoryUrl>https://github.com/vitali-karmanov/tradier-dotnet-client</RepositoryUrl>
+    <PackageReleaseNotes>First version of the Tradier .NET Client. Tested to be used for Sandbox API and Paper Account API.</PackageReleaseNotes>
+    <Description>Tradier .NET Client is a .NET Library for the Tradier API to interact with the Tradier Brokerage platform to get account information, market data, place orders, and create watchlists.</Description>
+    <Product>Tradier .NET Client</Product>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <RepositoryType>Git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
