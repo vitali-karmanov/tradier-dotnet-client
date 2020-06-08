@@ -8,7 +8,7 @@ In order to use this client you will need to have an Access Token from Tradier f
 
 ## Include the Client
 
-To implement the Library into your project, install [NuGet package]() into your solution/project by running it in the Package Manager Console.
+To implement the Library into your project, install [NuGet package](https://www.nuget.org/packages/tradier-dotnet-client/) into your solution/project by running it in the Package Manager Console.
 ````
 PM> Install-Package TradierDotNetClient
 ````
