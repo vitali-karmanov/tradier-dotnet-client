@@ -6,7 +6,7 @@ using Tradier.Client.Helpers;
 namespace Tradier.Client.Models.MarketData
 {
 
-    public class SeriesRootobject
+    public class TimesalesRootobject
     {
         [JsonProperty("series")]
         public Series Series { get; set; }

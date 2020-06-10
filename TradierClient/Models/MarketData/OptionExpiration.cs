@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Tradier.Client.Models.MarketData
 {
 
-    public class ExpirationRootobject
+    public class OptionExpirationsRootobject
     {
         [JsonProperty("expirations")]
         public Expirations Expirations { get; set; }

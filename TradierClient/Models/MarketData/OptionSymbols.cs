@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Tradier.Client.Models.MarketData
 {
 
-    public class SymbolsRootobject
+    public class OptionSymbolsRootobject
     {
         [JsonProperty("symbols")]
         public List<Symbol> Symbols { get; set; }

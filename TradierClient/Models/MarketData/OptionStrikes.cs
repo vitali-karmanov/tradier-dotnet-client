@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Tradier.Client.Models.MarketData
 {
 
-    public class StrikeRootobject
+    public class OptionStrikesRootobject
     {
         [JsonProperty("strikes")]
         public Strikes Strikes { get; set; }

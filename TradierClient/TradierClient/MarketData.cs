@@ -34,7 +34,7 @@ namespace Tradier.Client
         public async Task<Expirations> GetOptionExpirations(string symbol, bool? includeAllRoots = false, bool? strikes = false)
         {
             var response = await _requests.GetRequest($"markets/options/expirations?symbol={symbol}&includeAllRoots={includeAllRoots}&strikes={strikes}");
-            return JsonConvert.DeserializeObject<ExpirationRootobject>(response).Expirations;
+            return JsonConvert.DeserializeObject<OptionExpirationsRootobject>(response).Expirations;
         }
 
         public async Task<Quotes> GetQuotes(string symbols, bool greeks = false)
@@ -100,7 +100,7 @@ namespace Tradier.Client
         {
             string stringExpiration = expiration.ToString("yyyy-MM-dd");
             var response = await _requests.GetRequest($"markets/options/strikes?symbol={symbol}&expiration={stringExpiration}");
-            return JsonConvert.DeserializeObject<StrikeRootobject>(response).Strikes;
+            return JsonConvert.DeserializeObject<OptionStrikesRootobject>(response).Strikes;
         }
 
         public async Task<Series> GetTimeSales(string symbol, string interval, string start, string end, string filter = "all", CultureInfo culture = null)
@@ -118,7 +118,7 @@ namespace Tradier.Client
             string stringEnd = end.ToString("yyyy-MM-dd HH:mm");
 
             var response = await _requests.GetRequest($"markets/timesales?symbol={symbol}&interval={interval}&start={stringStart}&end={stringEnd}&session_filter={filter}");
-            return JsonConvert.DeserializeObject<SeriesRootobject>(response).Series;
+            return JsonConvert.DeserializeObject<TimesalesRootobject>(response).Series;
         }
 
         public async Task<Securities> GetEtbSecurities()
@@ -154,7 +154,7 @@ namespace Tradier.Client
         public async Task<List<Symbol>> LookupOptionSymbols(string symbol)
         {
             var response = await _requests.GetRequest($"markets/options/lookup?underlying={symbol}");
-            return JsonConvert.DeserializeObject<SymbolsRootobject>(response).Symbols;
+            return JsonConvert.DeserializeObject<OptionSymbolsRootobject>(response).Symbols;
         }
     }
 }
