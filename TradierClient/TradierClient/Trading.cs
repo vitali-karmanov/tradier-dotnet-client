@@ -8,15 +8,24 @@ using Tradier.Client.Models.Trading;
 // ReSharper disable once CheckNamespace
 namespace Tradier.Client
 {
+    /// <summary>
+    /// The <c>Trading</c> class
+    /// </summary>
     public class Trading
     {
         private readonly Requests _requests;
 
+        /// <summary>
+        /// The Trading constructor
+        /// </summary>
         public Trading(Requests requests)
         {
             _requests = requests;
         }
 
+        /// <summary>
+        /// Place an order to trade a single option
+        /// </summary>
         public async Task<IOrder> PlaceOptionOrder(string accountNumber, string symbol, string optionSymbol, string side, int quantity, string type, string duration, double? price = null, double? stop = null, string preview = null)
         {
             var data = new Dictionary<string, string>
@@ -46,6 +55,9 @@ namespace Tradier.Client
             }
         }
 
+        /// <summary>
+        /// Place a multileg order with up to 4 legs
+        /// </summary>
         public async Task<OrderReponse> PlaceMultilegOrder(string accountNumber, string symbol, string type, string duration, List<Tuple<string, string, int>> legs, double? price = null)
         {
             var data = new Dictionary<string, string>
@@ -72,6 +84,9 @@ namespace Tradier.Client
             return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
         }
 
+        /// <summary>
+        /// Modify an order. You may change some or all of these parameters
+        /// </summary>
         public async Task<OrderReponse> ModifyOrder(string accountNumber, string orderId, string type = null, string duration = null, string price = null, string stop = null)
         {
             var data = new Dictionary<string, string>
@@ -86,12 +101,18 @@ namespace Tradier.Client
             return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
         }
 
+        /// <summary>
+        /// Cancel an order
+        /// </summary>
         public async Task<OrderReponse> CancelOrder(string accountNumber, string orderId)
         {
             var response = await _requests.DeleteRequest($"accounts/{accountNumber}/orders/{orderId}");
             return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
         }
 
+        /// <summary>
+        /// Place an order to trade an equity security
+        /// </summary>
         public async Task<OrderReponse> PlaceEquityOrder(string accountNumber, string symbol, string side, int quantity, string type, string duration, double? price = null, double? stop = null)
         {
             var data = new Dictionary<string, string>
@@ -111,6 +132,9 @@ namespace Tradier.Client
             return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
         }
 
+        /// <summary>
+        /// Place a combo order. This is a specialized type of order consisting of one equity leg and one option leg
+        /// </summary>
         public async Task<OrderReponse> PlaceComboOrder(string accountNumber, string symbol, string type, string duration, List<Tuple<string, string, int>> legs, double? price = null)
         {
             var data = new Dictionary<string, string>
@@ -137,6 +161,9 @@ namespace Tradier.Client
             return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
         }
 
+        /// <summary>
+        /// Place a one-triggers-other order. This order type is composed of two separate orders sent simultaneously
+        /// </summary>
         public async Task<OrderReponse> PlaceOtoOrder(string accountNumber, string duration, List<Tuple<string, int, string, string, string, double?, double?>> legs)
         {
             var data = new Dictionary<string, string>
@@ -164,6 +191,9 @@ namespace Tradier.Client
             return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
         }
 
+        /// <summary>
+        /// Place a one-cancels-other order. This order type is composed of two separate orders sent simultaneously
+        /// </summary>
         public async Task<OrderReponse> PlaceOcoOrder(string accountNumber, string duration, List<Tuple<string, int, string, string, string, double?, double?>> legs)
         {
             var data = new Dictionary<string, string>
@@ -191,6 +221,9 @@ namespace Tradier.Client
             return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
         }
 
+        /// <summary>
+        /// Place a one-triggers-one-cancels-other order. This order type is composed of three separate orders sent simultaneously
+        /// </summary>
         public async Task<OrderReponse> PlaceOtocoOrder(string accountNumber, string duration, List<Tuple<string, int, string, string, string, double?, double?>> legs)
         {
             var data = new Dictionary<string, string>
