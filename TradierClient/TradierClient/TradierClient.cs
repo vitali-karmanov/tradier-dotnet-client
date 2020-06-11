@@ -5,6 +5,9 @@ using Tradier.Client.Helpers;
 // ReSharper disable once CheckNamespace
 namespace Tradier.Client
 {
+    /// <summary>
+    /// The <c>TradierClient</c> class
+    /// </summary>
     public class TradierClient
     {
         public Authentication Authentication { get; set; }
@@ -16,11 +19,17 @@ namespace Tradier.Client
         // TODO: Coming soon
         //public Streaming Streaming { get; set; }
 
+        /// <summary>
+        /// The TradierClient constructor (with no HttpClient passed)
+        /// </summary>
         public TradierClient(string apiToken, bool useProduction = false)
            : this(new HttpClient(), apiToken, useProduction)
         {
         }
 
+        /// <summary>
+        /// The TradierClient constructor (with an existing HttpClient)
+        /// </summary>
         public TradierClient(HttpClient httpClient, string apiToken, bool useProduction = false)
         {
             Uri baseEndpoint = useProduction ? new Uri(Settings.PRODUCTION_ENDPOINT) : new Uri(Settings.SANDBOX_ENDPOINT);
