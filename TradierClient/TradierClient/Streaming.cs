@@ -5,10 +5,16 @@ using Tradier.Client.Models.Streaming;
 
 namespace Tradier.Client
 {
+    /// <summary>
+    /// The <c>Streaming</c> class
+    /// </summary>
     public class Streaming
     {
         private readonly Requests _requests;
 
+        /// <summary>
+        /// The Streaming constructor
+        /// </summary>
         public Streaming(Requests requests)
         {
             _requests = requests;
