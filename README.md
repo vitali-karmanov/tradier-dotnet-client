@@ -63,7 +63,7 @@ Token authentication = await client.Authentication.RefreshAccessToken("<TOKEN>")
 ```csharp
 Quotes quotes = await client.MarketData.GetQuotes("AAPL, NFLX");
 Quotes quotes = await client.MarketData.PostGetQuotes("AAPL, NFLX");
-Options options = await client.MarketData.GetOptionChain("AAPL", "2020-05-27");
+Options options = await client.MarketData.GetOptionChain("AAPL", "May 27, 2020");
 Strikes strikes = await client.MarketData.GetStrikes("UNG", "May 15, 2020");
 Expirations expirations = await client.MarketData.GetOptionExpirations("AAPL");
 List<Symbol> lookup = await client.MarketData.LookupOptionSymbols("goog");
