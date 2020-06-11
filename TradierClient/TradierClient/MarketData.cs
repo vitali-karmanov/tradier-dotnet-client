@@ -31,16 +31,18 @@ namespace Tradier.Client
         public async Task<Options> GetOptionChain(string symbol, DateTime expiration, bool greeks = false)
         {
             string stringExpiration = expiration.ToString("yyyy-MM-dd");
-            return await GetOptionChain(symbol, stringExpiration, greeks);
+            var response = await _requests.GetRequest($"markets/options/chains?symbol={symbol}&expiration={stringExpiration}&greeks={greeks}");
+            return JsonConvert.DeserializeObject<OptionChainRootobject>(response).Options;
         }
 
         /// <summary>
         /// Get all quotes in an option chain
         /// </summary>
-        public async Task<Options> GetOptionChain(string symbol, string expiration, bool greeks = false)
+        public async Task<Options> GetOptionChain(string symbol, string expiration, bool greeks = false, CultureInfo culture = null)
         {
-            var response = await _requests.GetRequest($"markets/options/chains?symbol={symbol}&expiration={expiration}&greeks={greeks}");
-            return JsonConvert.DeserializeObject<OptionChainRootobject>(response).Options;
+            culture ??= new CultureInfo("en-US");
+            DateTime expirationDateTime = DateTime.Parse(expiration, culture);
+            return await GetOptionChain(symbol, expirationDateTime, greeks);
         }
 
         /// <summary>
