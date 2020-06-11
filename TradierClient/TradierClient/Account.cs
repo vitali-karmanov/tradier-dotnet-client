@@ -60,7 +60,7 @@ namespace Tradier.Client
 
         /// <summary>
         /// Get cost basis information for a specific user account
-        /// </summary
+        /// </summary>
         public async Task<GainLoss> GetGainLoss(string accountNumber, int page = 1, int limitPerPage = 25)
         {
             var response = await _requests.GetRequest($"accounts/{accountNumber}/gainloss?page={page}&limit={limitPerPage}");

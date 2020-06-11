@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Tradier.Client.Helpers;
 using Tradier.Client.Models.Watchlist;
 
+// ReSharper disable once CheckNamespace
 namespace Tradier.Client
 {
     /// <summary>

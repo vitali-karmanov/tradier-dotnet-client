@@ -1,8 +1,6 @@
-﻿using Newtonsoft.Json;
-using System.Threading.Tasks;
-using Tradier.Client.Helpers;
-using Tradier.Client.Models.Streaming;
+﻿using Tradier.Client.Helpers;
 
+// ReSharper disable once CheckNamespace
 namespace Tradier.Client
 {
     /// <summary>
