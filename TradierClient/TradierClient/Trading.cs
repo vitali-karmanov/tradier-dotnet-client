@@ -26,7 +26,7 @@ namespace Tradier.Client
         /// <summary>
         /// Place an order to trade a single option
         /// </summary>
-        public async Task<IOrder> PlaceOptionOrder(string accountNumber, string symbol, string optionSymbol, string side, int quantity, string type, string duration, double? price = null, double? stop = null, string preview = null)
+        public async Task<IOrder> PlaceOptionOrder(string accountNumber, string symbol, string optionSymbol, string side, int quantity, string type, string duration, double? price = null, double? stop = null, bool preview = false)
         {
             var data = new Dictionary<string, string>
             {
@@ -39,7 +39,7 @@ namespace Tradier.Client
                 { "duration", duration },
                 { "price", price.ToString() },
                 { "stop", stop.ToString() },
-                { "preview", preview }
+                { "preview", preview.ToString() }
             };
 
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
@@ -58,7 +58,7 @@ namespace Tradier.Client
         /// <summary>
         /// Place a multileg order with up to 4 legs
         /// </summary>
-        public async Task<OrderReponse> PlaceMultilegOrder(string accountNumber, string symbol, string type, string duration, List<Tuple<string, string, int>> legs, double? price = null)
+        public async Task<OrderReponse> PlaceMultilegOrder(string accountNumber, string symbol, string type, string duration, List<(string, string, int)> legs, double? price = null)
         {
             var data = new Dictionary<string, string>
             {
@@ -135,7 +135,7 @@ namespace Tradier.Client
         /// <summary>
         /// Place a combo order. This is a specialized type of order consisting of one equity leg and one option leg
         /// </summary>
-        public async Task<OrderReponse> PlaceComboOrder(string accountNumber, string symbol, string type, string duration, List<Tuple<string, string, int>> legs, double? price = null)
+        public async Task<OrderReponse> PlaceComboOrder(string accountNumber, string symbol, string type, string duration, List<(string, string, int)> legs, double? price = null)
         {
             var data = new Dictionary<string, string>
             {
@@ -164,7 +164,7 @@ namespace Tradier.Client
         /// <summary>
         /// Place a one-triggers-other order. This order type is composed of two separate orders sent simultaneously
         /// </summary>
-        public async Task<OrderReponse> PlaceOtoOrder(string accountNumber, string duration, List<Tuple<string, int, string, string, string, double?, double?>> legs)
+        public async Task<OrderReponse> PlaceOtoOrder(string accountNumber, string duration, List<(string, int, string, string, string, double?, double?)> legs)
         {
             var data = new Dictionary<string, string>
             {
@@ -194,7 +194,7 @@ namespace Tradier.Client
         /// <summary>
         /// Place a one-cancels-other order. This order type is composed of two separate orders sent simultaneously
         /// </summary>
-        public async Task<OrderReponse> PlaceOcoOrder(string accountNumber, string duration, List<Tuple<string, int, string, string, string, double?, double?>> legs)
+        public async Task<OrderReponse> PlaceOcoOrder(string accountNumber, string duration, List<(string, int, string, string, string, double?, double?)> legs)
         {
             var data = new Dictionary<string, string>
             {
@@ -224,7 +224,7 @@ namespace Tradier.Client
         /// <summary>
         /// Place a one-triggers-one-cancels-other order. This order type is composed of three separate orders sent simultaneously
         /// </summary>
-        public async Task<OrderReponse> PlaceOtocoOrder(string accountNumber, string duration, List<Tuple<string, int, string, string, string, double?, double?>> legs)
+        public async Task<OrderReponse> PlaceOtocoOrder(string accountNumber, string duration, List<(string, int, string, string, string, double?, double?)> legs)
         {
             var data = new Dictionary<string, string>
             {
