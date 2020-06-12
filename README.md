@@ -78,8 +78,8 @@ Securities lookup = await client.MarketData.LookupSymbol("goog");
 ### [Trading](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki/Using-Trading-methods)
 
 ```csharp
-OrderReponse order = await client.Trading.PlaceEquityOrder(accountNumber, "AAPL", "buy", 10, "market", "day", 1.00, 1.00);
-IOrder order = await client.Trading.PlaceOptionOrder(accountNumber, "SPY", "SPY140118C00195000", "buy_to_open", 10, "market", "day", 1.00, 1.00, true);
+OrderReponse order = await client.Trading.PlaceEquityOrder(accountNumber, "AAPL", "buy", 10, "market");
+IOrder order = await client.Trading.PlaceOptionOrder(accountNumber, "SPY", "SPY140118C00195000", "buy_to_open", 10, "market", "day", true);
 OrderReponse order = await client.Trading.PlaceMultilegOrder(accountNumber, "MFA", "credit", "day", new List<(string, string, int)> { ("AAPL", "buy", 10), ("IBM", "buy", 5) }, 1.00);
 OrderReponse order = await client.Trading.PlaceComboOrder(accountNumber, "MFA", "credit", "day", new List<(string, string, int)> { ("AAPL", "buy", 10), ("IBM", "buy", 5) }, 1.00);
 OrderReponse order = await client.Trading.PlaceOtoOrder(accountNumber, "day", new List<(string, int, string, string, string, double?, double?)> { ("SPY", 10, "limit", "SPY190605C00282000", "buy_to_open", 1.00, 1.00) });
