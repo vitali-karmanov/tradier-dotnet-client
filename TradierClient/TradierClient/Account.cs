@@ -79,7 +79,7 @@ namespace Tradier.Client
         /// <summary>
         /// Get detailed information about a previously placed order
         /// </summary>
-        public async Task<Order> GetOrder(string accountNumber, string orderId)
+        public async Task<Order> GetOrder(string accountNumber, int orderId)
         {
             var response = await _requests.GetRequest($"accounts/{accountNumber}/orders/{orderId}");
             return JsonConvert.DeserializeObject<Orders>(response).Order.FirstOrDefault();

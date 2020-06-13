@@ -207,7 +207,7 @@ namespace Tradier.Client
         /// <summary>
         /// Search for a symbol using the ticker symbol or partial symbol
         /// </summary>
-        public async Task<Securities> LookupSymbol(string query, string? exchanges = null, string? types = null)
+        public async Task<Securities> LookupSymbol(string query, string exchanges = null, string types = null)
         {
             var response = await _requests.GetRequest($"lookup?q={query}&exchanges={exchanges}&types={types}");
             return JsonConvert.DeserializeObject<SecuritiesRootobject>(response).Securities;
