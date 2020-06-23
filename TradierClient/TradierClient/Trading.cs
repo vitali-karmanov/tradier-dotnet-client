@@ -139,6 +139,7 @@ namespace Tradier.Client
             {
                 { "class", "oto" },
                 { "duration", duration },
+                { "preview", preview.ToString() }
             };
 
             int index = 0;
@@ -150,9 +151,9 @@ namespace Tradier.Client
                 data.Add($"type[{index}]", leg.Item3);
                 data.Add($"option_symbol[{index}]", leg.Item4);
                 data.Add($"side[{index}]", leg.Item5);
-                data.Add($"price[{index}]", leg.Item6.HasValue ? leg.Item6.ToString() : "" );
-                data.Add($"stop[{index}]", leg.Item7.HasValue ? leg.Item7.ToString() : "" );
-                
+                data.Add($"price[{index}]", leg.Item6.HasValue ? leg.Item6.ToString() : "");
+                data.Add($"stop[{index}]", leg.Item7.HasValue ? leg.Item7.ToString() : "");
+
                 index++;
             }
 
@@ -170,6 +171,7 @@ namespace Tradier.Client
             {
                 { "class", "oco" },
                 { "duration", duration },
+                { "preview", preview.ToString() }
             };
 
             int index = 0;
@@ -201,6 +203,7 @@ namespace Tradier.Client
             {
                 { "class", "otoco" },
                 { "duration", duration },
+                { "preview", preview.ToString() }
             };
 
             int index = 0;
