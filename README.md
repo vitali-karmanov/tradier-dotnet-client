@@ -93,10 +93,10 @@ OrderReponse order = await client.Trading.CancelOrder(accountNumber, orderId);
 
 ```csharp
 Watchlists watchlists = await client.Watchlist.GetWatchlists();
-Watchlists dafaultWatchlist = await client.Watchlist.GetWatchlist("<WATCHLIST_ID>");
-Watchlists newWatchlist = await client.Watchlist.CreateWatchlist("My Watchlist", "AAPL,IBM");
-Watchlists updatedWatchlist = await client.Watchlist.UpdateWatchlist("my-watchlist", "My First Watchlist", "SPY");
-Watchlists deleteWatclist = await client.Watchlist.DeleteWatchlist("my-watchlist");
+Watchlist dafaultWatchlist = await client.Watchlist.GetWatchlist("<WATCHLIST_ID>");
+Watchlist newWatchlist = await client.Watchlist.CreateWatchlist("My Watchlist", "AAPL,IBM");
+Watchlist updatedWatchlist = await client.Watchlist.UpdateWatchlist("my-watchlist", "My First Watchlist", "SPY");
+Watchlist deleteWatclist = await client.Watchlist.DeleteWatchlist("my-watchlist");
 await client.Watchlist.AddSymbolsToWatchlist("my-watchlist", "NFLX");
 await client.Watchlist.RemoveSymbolFromWatchlist("my-watchlist", "AAPL");
 ```
