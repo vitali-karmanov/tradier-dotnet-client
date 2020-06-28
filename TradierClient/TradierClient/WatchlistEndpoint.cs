@@ -30,7 +30,7 @@ namespace Tradier.Client
         public async Task<Watchlists> GetWatchlists()
         {
             var response = await _requests.GetRequest("watchlists");
-            return JsonConvert.DeserializeObject<WatchlistRootobject>(response).Watchlists;
+            return JsonConvert.DeserializeObject<WatchlistsRootobject>(response).Watchlists;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Tradier.Client
         public async Task<Watchlist> GetWatchlist(string watchlistId)
         {
             var response = await _requests.GetRequest($"watchlists/{watchlistId}");
-            return JsonConvert.DeserializeObject<Models.Watchlist.Watchlist>(response);
+            return JsonConvert.DeserializeObject<WatchlistRootobject>(response).Watchlist;
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Tradier.Client
             };
 
             var response = await _requests.PostRequest($"watchlists", data);
-            return JsonConvert.DeserializeObject<Models.Watchlist.Watchlist>(response);
+            return JsonConvert.DeserializeObject<WatchlistRootobject>(response).Watchlist;
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Tradier.Client
             };
 
             var response = await _requests.PutRequest($"watchlists/{watchlistId}", data);
-            return JsonConvert.DeserializeObject<Models.Watchlist.Watchlist>(response);
+            return JsonConvert.DeserializeObject<WatchlistRootobject>(response).Watchlist;
         }
 
         /// <summary>
@@ -98,13 +98,13 @@ namespace Tradier.Client
         public async Task<Watchlists> DeleteWatchlist(string watchlistId)
         {
             var response = await _requests.DeleteRequest($"watchlists/{watchlistId}");
-            return JsonConvert.DeserializeObject<WatchlistRootobject>(response).Watchlists;
+            return JsonConvert.DeserializeObject<WatchlistsRootobject>(response).Watchlists;
         }
 
         /// <summary>
         /// Add symbols to an existing watchlist. If the symbol exists, it will be over-written
         /// </summary>
-        public async Task<Watchlists> AddSymbolsToWatchlist(string watchlistId, string symbols)
+        public async Task<Watchlist> AddSymbolsToWatchlist(string watchlistId, string symbols)
         {
             List<string> listSymbols = symbols.Split(',').Select(x => x.Trim()).ToList();
             return await AddSymbolsToWatchlist(watchlistId, listSymbols);
@@ -113,7 +113,7 @@ namespace Tradier.Client
         /// <summary>
         /// Add symbols to an existing watchlist. If the symbol exists, it will be over-written
         /// </summary>
-        public async Task<Watchlists> AddSymbolsToWatchlist(string watchlistId, List<string> symbols)
+        public async Task<Watchlist> AddSymbolsToWatchlist(string watchlistId, List<string> symbols)
         {
             string strSymbols = String.Join(",", symbols);
             var data = new Dictionary<string, string>
@@ -122,16 +122,16 @@ namespace Tradier.Client
             };
 
             var response = await _requests.PostRequest($"watchlists/{watchlistId}/symbols", data);
-            return JsonConvert.DeserializeObject<Watchlists>(response);
+            return JsonConvert.DeserializeObject<WatchlistRootobject>(response).Watchlist;
         }
 
         /// <summary>
         /// Remove a symbol from a specific watchlist
         /// </summary>
-        public async Task<Watchlists> RemoveSymbolFromWatchlist(string watchlistId, string symbol)
+        public async Task<Watchlist> RemoveSymbolFromWatchlist(string watchlistId, string symbol)
         {
             var response = await _requests.DeleteRequest($"watchlists/{watchlistId}/symbols/{symbol}");
-            return JsonConvert.DeserializeObject<Watchlists>(response);
+            return JsonConvert.DeserializeObject<WatchlistRootobject>(response).Watchlist;
         }
     }
 }

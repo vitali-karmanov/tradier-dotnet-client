@@ -5,10 +5,16 @@ using Tradier.Client.Helpers;
 namespace Tradier.Client.Models.Watchlist
 {
 
-    public class WatchlistRootobject
+    public class WatchlistsRootobject
     {
         [JsonProperty("watchlists")]
         public Watchlists Watchlists { get; set; }
+    }
+
+    public class WatchlistRootobject
+    {
+        [JsonProperty("watchlist")]
+        public Watchlist Watchlist { get; set; }
     }
 
     public class Watchlists
