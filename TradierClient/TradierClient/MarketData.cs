@@ -209,7 +209,19 @@ namespace Tradier.Client
         /// </summary>
         public async Task<Securities> LookupSymbol(string query, string exchanges = null, string types = null)
         {
-            var response = await _requests.GetRequest($"lookup?q={query}&exchanges={exchanges}&types={types}");
+            string urlBuilder = $"markets/lookup?q={query}";
+
+            if (!String.IsNullOrEmpty(exchanges))
+            {
+                urlBuilder += $"&exchanges={exchanges}";
+            }
+
+            if (!String.IsNullOrEmpty(types))
+            {
+                urlBuilder += $"&types={types}";
+            }
+
+            var response = await _requests.GetRequest(urlBuilder);
             return JsonConvert.DeserializeObject<SecuritiesRootobject>(response).Securities;
         }
 
