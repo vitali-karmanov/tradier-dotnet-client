@@ -14,7 +14,7 @@ namespace Tradier.Client
         public Account Account { get; set; }
         public MarketData MarketData { get; set; }
         public Trading Trading { get; set; }
-        public Watchlist Watchlist { get; set; }
+        public WatchlistEndpoint Watchlist { get; set; }
 
         // TODO: Coming soon
         //public Streaming Streaming { get; set; }
@@ -44,7 +44,7 @@ namespace Tradier.Client
             Account = new Account(request);
             MarketData = new MarketData(request);
             Trading = new Trading(request);
-            Watchlist = new Watchlist(request);
+            Watchlist = new WatchlistEndpoint(request);
 
             // TODO: Coming soon
             //Streaming = new Streaming(request);

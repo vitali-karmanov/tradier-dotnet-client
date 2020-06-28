@@ -12,14 +12,14 @@ namespace Tradier.Client
     /// <summary>
     /// The <c>Watchlist</c> class
     /// </summary>
-    public class Watchlist
+    public class WatchlistEndpoint
     {
         private readonly Requests _requests;
 
         /// <summary>
         /// The Watchlist constructor
         /// </summary>
-        public Watchlist(Requests requests)
+        public WatchlistEndpoint(Requests requests)
         {
             _requests = requests;
         }
@@ -36,16 +36,16 @@ namespace Tradier.Client
         /// <summary>
         /// Retrieve a specific watchlist by id
         /// </summary>
-        public async Task<Watchlists> GetWatchlist(string watchlistId)
+        public async Task<Watchlist> GetWatchlist(string watchlistId)
         {
             var response = await _requests.GetRequest($"watchlists/{watchlistId}");
-            return JsonConvert.DeserializeObject<Watchlists>(response);
+            return JsonConvert.DeserializeObject<Models.Watchlist.Watchlist>(response);
         }
 
         /// <summary>
         /// Create a new watchlist
         /// </summary>
-        public async Task<Watchlists> CreateWatchlist(string name, string symbols)
+        public async Task<Watchlist> CreateWatchlist(string name, string symbols)
         {
             List<string> listSymbols = symbols.Split(',').Select(x => x.Trim()).ToList();
             return await CreateWatchlist(name, listSymbols);
@@ -54,7 +54,7 @@ namespace Tradier.Client
         /// <summary>
         /// Create a new watchlist
         /// </summary>
-        public async Task<Watchlists> CreateWatchlist(string name, List<string> symbols)
+        public async Task<Watchlist> CreateWatchlist(string name, List<string> symbols)
         {
             string strSymbols = String.Join(",", symbols);
             var data = new Dictionary<string, string>
@@ -64,13 +64,13 @@ namespace Tradier.Client
             };
 
             var response = await _requests.PostRequest($"watchlists", data);
-            return JsonConvert.DeserializeObject<Watchlists>(response);
+            return JsonConvert.DeserializeObject<Models.Watchlist.Watchlist>(response);
         }
 
         /// <summary>
         /// Update an existing watchlist
         /// </summary>
-        public async Task<Watchlists> UpdateWatchlist(string watchlistId, string name, string symbols = "")
+        public async Task<Watchlist> UpdateWatchlist(string watchlistId, string name, string symbols = "")
         {
             List<string> listSymbols = symbols?.Split(',').Select(x => x.Trim()).ToList();
             return await UpdateWatchlist(watchlistId, name, listSymbols);
@@ -79,7 +79,7 @@ namespace Tradier.Client
         /// <summary>
         /// Update an existing watchlist
         /// </summary>
-        public async Task<Watchlists> UpdateWatchlist(string watchlistId, string name, List<string> symbols = null)
+        public async Task<Watchlist> UpdateWatchlist(string watchlistId, string name, List<string> symbols = null)
         {
             string strSymbols = String.Join(",", symbols);
             var data = new Dictionary<string, string>
@@ -89,7 +89,7 @@ namespace Tradier.Client
             };
 
             var response = await _requests.PutRequest($"watchlists/{watchlistId}", data);
-            return JsonConvert.DeserializeObject<Watchlists>(response);
+            return JsonConvert.DeserializeObject<Models.Watchlist.Watchlist>(response);
         }
 
         /// <summary>
