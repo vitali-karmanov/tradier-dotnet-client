@@ -10,15 +10,15 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/vitali-karmanov/tradier-dotnet-client</RepositoryUrl>
-    <PackageReleaseNotes>Added preview for orders and fixed some minor problems with lookup symbols and watchlists</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed problem with deserialization for Watchlists</PackageReleaseNotes>
     <Description>.NET Client for the Tradier API to interact with the Tradier Brokerage platform to get account information, market data, place orders, and create watchlists.</Description>
     <Product>Tradier .NET Client</Product>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>Git</RepositoryType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.2</Version>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
-    <FileVersion>1.0.2.0</FileVersion>
+    <AssemblyVersion>1.0.3.0</AssemblyVersion>
+    <FileVersion>1.0.3.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
