@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Linq;
 using System.Threading.Tasks;
+using Tradier.Client.Exceptions;
 using Tradier.Client.Helpers;
 using Tradier.Client.Models.Account;
 
@@ -13,13 +14,15 @@ namespace Tradier.Client
     public class Account
     {
         private readonly Requests _requests;
+        private readonly string _defaultAccountNumber;
 
         /// <summary>
         /// Account Constructor
         /// </summary>
-        public Account(Requests requests)
+        public Account(Requests requests, string defaultAccountNumber)
         {
             _requests = requests;
+            _defaultAccountNumber = defaultAccountNumber;
         }
 
         /// <summary>
@@ -32,10 +35,17 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Get balances information for a specific user account.
+        /// Get balances information for a specific or a default user account.
         /// </summary>
-        public async Task<Balances> GetBalances(string accountNumber)
+        public async Task<Balances> GetBalances(string accountNumber = null)
         {
+            accountNumber = string.IsNullOrEmpty(accountNumber) ? _defaultAccountNumber : accountNumber;
+
+            if (string.IsNullOrEmpty(accountNumber))
+            {
+                throw new MissingAccountNumberException();
+            }
+
             var response = await _requests.GetRequest($"accounts/{accountNumber}/balances");
             return JsonConvert.DeserializeObject<BalanceRootObject>(response).Balances;
         }
@@ -43,10 +53,30 @@ namespace Tradier.Client
         /// <summary>
         /// Get the current positions being held in an account. These positions are updated intraday via trading
         /// </summary>
-        public async Task<Positions> GetPositions(string accountNumber)
+        public async Task<Positions> GetPositions(string accountNumber = null)
         {
+            accountNumber = string.IsNullOrEmpty(accountNumber) ? _defaultAccountNumber : accountNumber;
+
+            if (string.IsNullOrEmpty(accountNumber))
+            {
+                throw new MissingAccountNumberException();
+            }
+
             var response = await _requests.GetRequest($"accounts/{accountNumber}/positions");
             return JsonConvert.DeserializeObject<PositionsRootobject>(response).Positions;
+        }
+
+        /// <summary>
+        /// Get historical activity for the default account
+        /// </summary>
+        public async Task<History> GetHistory(int page = 1, int limitPerPage = 25)
+        {
+            if (string.IsNullOrEmpty(_defaultAccountNumber))
+            {
+                throw new MissingAccountNumberException("The default account number was not defined.");
+            }
+
+            return await GetHistory(_defaultAccountNumber, page, limitPerPage);
         }
 
         /// <summary>
@@ -56,6 +86,19 @@ namespace Tradier.Client
         {
             var response = await _requests.GetRequest($"accounts/{accountNumber}/history?page={page}&limit={limitPerPage}");
             return JsonConvert.DeserializeObject<HistoryRootobject>(response).History;
+        }
+
+        /// <summary>
+        /// Get cost basis information for the default user account
+        /// </summary>
+        public async Task<GainLoss> GetGainLoss(int page = 1, int limitPerPage = 25)
+        {
+            if (string.IsNullOrEmpty(_defaultAccountNumber))
+            {
+                throw new MissingAccountNumberException("The default account number was not defined.");
+            }
+
+            return await GetGainLoss(_defaultAccountNumber, page, limitPerPage);
         }
 
         /// <summary>
@@ -70,10 +113,35 @@ namespace Tradier.Client
         /// <summary>
         /// Retrieve orders placed within an account
         /// </summary>
-        public async Task<Orders> GetOrders(string accountNumber)
+        public async Task<Orders> GetOrders(string accountNumber = null)
         {
+            accountNumber = string.IsNullOrEmpty(accountNumber) ? _defaultAccountNumber : accountNumber;
+
+            if (string.IsNullOrEmpty(accountNumber))
+            {
+                throw new MissingAccountNumberException();
+            }
+
+            if (string.IsNullOrEmpty(accountNumber))
+            {
+                throw new MissingAccountNumberException();
+            }
+
             var response = await _requests.GetRequest($"accounts/{accountNumber}/orders");
             return JsonConvert.DeserializeObject<OrdersRootobject>(response).Orders;
+        }
+
+        /// <summary>
+        /// Get detailed information about a previously placed order in the default account
+        /// </summary>
+        public async Task<Order> GetOrder(int orderId)
+        {
+            if (string.IsNullOrEmpty(_defaultAccountNumber))
+            {
+                throw new MissingAccountNumberException("The default account number was not defined.");
+            }
+
+            return await GetOrder(_defaultAccountNumber, orderId);
         }
 
         /// <summary>

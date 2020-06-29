@@ -20,17 +20,9 @@ namespace Tradier.Client
         //public Streaming Streaming { get; set; }
 
         /// <summary>
-        /// The TradierClient constructor (with no HttpClient passed)
-        /// </summary>
-        public TradierClient(string apiToken, bool useProduction = false)
-           : this(new HttpClient(), apiToken, useProduction)
-        {
-        }
-
-        /// <summary>
         /// The TradierClient constructor (with an existing HttpClient)
         /// </summary>
-        public TradierClient(HttpClient httpClient, string apiToken, bool useProduction = false)
+        public TradierClient(HttpClient httpClient, string apiToken, string defaultAccountNumber = null, bool useProduction = false)
         {
             Uri baseEndpoint = useProduction ? new Uri(Settings.PRODUCTION_ENDPOINT) : new Uri(Settings.SANDBOX_ENDPOINT);
 
@@ -41,7 +33,7 @@ namespace Tradier.Client
             Requests request = new Requests(httpClient);
 
             Authentication = new Authentication(request);
-            Account = new Account(request);
+            Account = new Account(request, defaultAccountNumber);
             MarketData = new MarketData(request);
             Trading = new Trading(request);
             Watchlist = new WatchlistEndpoint(request);
@@ -50,5 +42,20 @@ namespace Tradier.Client
             //Streaming = new Streaming(request);
         }
 
+        /// <summary>
+        /// The TradierClient constructor (with no HttpClient passed)
+        /// </summary>
+        public TradierClient(string apiToken, string defaultAccountNumber, bool useProduction = false)
+           : this(new HttpClient(), apiToken, defaultAccountNumber, useProduction)
+        {
+        }
+
+        /// <summary>
+        /// The TradierClient constructor (with no HttpClient and no defaultAccount passed)
+        /// </summary>
+        public TradierClient(string apiToken, bool useProduction = false)
+           : this(new HttpClient(), apiToken, null, useProduction)
+        {
+        }
     }
 }
