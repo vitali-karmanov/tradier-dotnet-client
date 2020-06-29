@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Tradier.Client.Exceptions;
 using Tradier.Client.Helpers;
 using Tradier.Client.Models.Trading;
 
@@ -14,13 +15,28 @@ namespace Tradier.Client
     public class Trading
     {
         private readonly Requests _requests;
+        private readonly string _defaultAccountNumber;
 
         /// <summary>
         /// The Trading constructor
         /// </summary>
-        public Trading(Requests requests)
+        public Trading(Requests requests, string defaultAccountNumber)
         {
             _requests = requests;
+            _defaultAccountNumber = defaultAccountNumber;
+        }
+
+        /// <summary>
+        /// Place an order using the default account number to trade a single option 
+        /// </summary>
+        public async Task<IOrder> PlaceOptionOrder(string symbol, string optionSymbol, string side, int quantity, string type, string duration, double? price = null, double? stop = null, bool preview = false)
+        {
+            if (string.IsNullOrEmpty(_defaultAccountNumber))
+            {
+                throw new MissingAccountNumberException("The default account number was not defined.");
+            }
+
+            return await PlaceOptionOrder(_defaultAccountNumber, symbol, optionSymbol, side, quantity, type, duration, price, stop, preview);
         }
 
         /// <summary>
@@ -45,6 +61,19 @@ namespace Tradier.Client
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
 
             return GetOrderReponseOrOrderPreviewResponse(response, preview);
+        }
+
+        /// <summary>
+        /// Place a multileg order using the default account number with up to 4 legs 
+        /// </summary>
+        public async Task<IOrder> PlaceMultilegOrder(string symbol, string type, string duration, List<(string, string, int)> legs, double? price = null, bool preview = false)
+        {
+            if (string.IsNullOrEmpty(_defaultAccountNumber))
+            {
+                throw new MissingAccountNumberException("The default account number was not defined.");
+            }
+
+            return await PlaceMultilegOrder(_defaultAccountNumber, symbol, type, duration, legs, price, preview);
         }
 
         /// <summary>
@@ -78,6 +107,19 @@ namespace Tradier.Client
         }
 
         /// <summary>
+        /// Place an order using the default account to trade an equity security
+        /// </summary>
+        public async Task<IOrder> PlaceEquityOrder(string symbol, string side, int quantity, string type, string duration, double? price = null, double? stop = null, bool preview = false)
+        {
+            if (string.IsNullOrEmpty(_defaultAccountNumber))
+            {
+                throw new MissingAccountNumberException("The default account number was not defined.");
+            }
+
+            return await PlaceEquityOrder(_defaultAccountNumber, symbol, side, quantity, type, duration, price, stop, preview);
+        }
+
+        /// <summary>
         /// Place an order to trade an equity security
         /// </summary>
         public async Task<IOrder> PlaceEquityOrder(string accountNumber, string symbol, string side, int quantity, string type, string duration, double? price = null, double? stop = null, bool preview = false)
@@ -98,6 +140,19 @@ namespace Tradier.Client
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
 
             return GetOrderReponseOrOrderPreviewResponse(response, preview);
+        }
+
+        /// <summary>
+        /// Place a combo order using the default account number. This is a specialized type of order consisting of one equity leg and one option leg
+        /// </summary>
+        public async Task<IOrder> PlaceComboOrder(string symbol, string type, string duration, List<(string, string, int)> legs, double? price = null, bool preview = false)
+        {
+            if (string.IsNullOrEmpty(_defaultAccountNumber))
+            {
+                throw new MissingAccountNumberException("The default account number was not defined.");
+            }
+
+            return await PlaceComboOrder(_defaultAccountNumber, symbol, type, duration, legs, price, preview);
         }
 
         /// <summary>
@@ -128,6 +183,19 @@ namespace Tradier.Client
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
 
             return GetOrderReponseOrOrderPreviewResponse(response, preview);
+        }
+
+        /// <summary>
+        /// Place a one-triggers-other order using the default account number. This order type is composed of two separate orders sent simultaneously
+        /// </summary>
+        public async Task<IOrder> PlaceOtoOrder(string duration, List<(string, int, string, string, string, double?, double?)> legs, bool preview = false)
+        {
+            if (string.IsNullOrEmpty(_defaultAccountNumber))
+            {
+                throw new MissingAccountNumberException("The default account number was not defined.");
+            }
+
+            return await PlaceOtoOrder(_defaultAccountNumber, duration, legs, preview);
         }
 
         /// <summary>
@@ -163,6 +231,19 @@ namespace Tradier.Client
         }
 
         /// <summary>
+        /// Place a one-cancels-other order using the default account number. This order type is composed of two separate orders sent simultaneously
+        /// </summary>
+        public async Task<IOrder> PlaceOcoOrder(string duration, List<(string, int, string, string, string, double?, double?)> legs, bool preview = false)
+        {
+            if (string.IsNullOrEmpty(_defaultAccountNumber))
+            {
+                throw new MissingAccountNumberException("The default account number was not defined.");
+            }
+
+            return await PlaceOcoOrder(_defaultAccountNumber, duration, legs, preview);
+        }
+
+        /// <summary>
         /// Place a one-cancels-other order. This order type is composed of two separate orders sent simultaneously
         /// </summary>
         public async Task<IOrder> PlaceOcoOrder(string accountNumber, string duration, List<(string, int, string, string, string, double?, double?)> legs, bool preview = false)
@@ -192,6 +273,19 @@ namespace Tradier.Client
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
 
             return GetOrderReponseOrOrderPreviewResponse(response, preview);
+        }
+
+        /// <summary>
+        /// Place a one-triggers-one-cancels-other order using the default account number. This order type is composed of three separate orders sent simultaneously
+        /// </summary>
+        public async Task<IOrder> PlaceOtocoOrder(string duration, List<(string, int, string, string, string, double?, double?)> legs, bool preview = false)
+        {
+            if (string.IsNullOrEmpty(_defaultAccountNumber))
+            {
+                throw new MissingAccountNumberException("The default account number was not defined.");
+            }
+
+            return await PlaceOtocoOrder(_defaultAccountNumber, duration, legs, preview);
         }
 
         /// <summary>
@@ -227,7 +321,20 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Modify an order. You may change some or all of these parameters
+        /// Modify an order using the default account number. You may change some or all of these parameters.
+        /// </summary>
+        public async Task<OrderReponse> ModifyOrder(string orderId, string type = null, string duration = null, string price = null, string stop = null)
+        {
+            if (string.IsNullOrEmpty(_defaultAccountNumber))
+            {
+                throw new MissingAccountNumberException("The default account number was not defined.");
+            }
+
+            return await ModifyOrder(_defaultAccountNumber, orderId, type, duration, price, stop);
+        }
+
+        /// <summary>
+        /// Modify an order. You may change some or all of these parameters.
         /// </summary>
         public async Task<OrderReponse> ModifyOrder(string accountNumber, string orderId, string type = null, string duration = null, string price = null, string stop = null)
         {
@@ -244,7 +351,20 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Cancel an order
+        /// Cancel an order using the default account number
+        /// </summary>
+        public async Task<OrderReponse> CancelOrder(string orderId)
+        {
+            if (string.IsNullOrEmpty(_defaultAccountNumber))
+            {
+                throw new MissingAccountNumberException("The default account number was not defined.");
+            }
+
+            return await CancelOrder(_defaultAccountNumber, orderId);
+        }
+
+        /// <summary>
+        /// Cancel an order using the default account number
         /// </summary>
         public async Task<OrderReponse> CancelOrder(string accountNumber, string orderId)
         {

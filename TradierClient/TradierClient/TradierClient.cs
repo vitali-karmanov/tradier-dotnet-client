@@ -35,7 +35,7 @@ namespace Tradier.Client
             Authentication = new Authentication(request);
             Account = new Account(request, defaultAccountNumber);
             MarketData = new MarketData(request);
-            Trading = new Trading(request);
+            Trading = new Trading(request, defaultAccountNumber);
             Watchlist = new WatchlistEndpoint(request);
 
             // TODO: Coming soon
