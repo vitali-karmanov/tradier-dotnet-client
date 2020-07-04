@@ -100,7 +100,7 @@ IOrder order = await client.Trading.PlaceComboOrder(accountNumber, "MFA", "credi
 IOrder order = await client.Trading.PlaceOtoOrder(accountNumber, "day", new List<(string, int, string, string, string, double?, double?)> { ("SPY", 10, "limit", "SPY190605C00282000", "buy_to_open", 1.00, 1.00) });
 IOrder order = await client.Trading.PlaceOcoOrder(accountNumber, "day", new List<(string, int, string, string, string, double?, double?)> { ("SPY", 10, "limit", "SPY190605C00282000", "buy_to_open", 1.00, 1.00) });
 IOrder order = await client.Trading.PlaceOtocoOrder(accountNumber, "day", new List<(string, int, string, string, string, double?, double?)> { ("SPY", 10, "limit", "SPY190605C00282000", "buy_to_open", 1.00, 1.00) });
-IOrder order = await client.Trading.ModifyOrder(accountNumber, orderId, "limit", "day", "1.00", "1.00");
+IOrder order = await client.Trading.ModifyOrder(accountNumber, orderId, "limit", "day", 1.00, 1.00);
 IOrder order = await client.Trading.CancelOrder(accountNumber, orderId);
 ```
 
