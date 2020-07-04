@@ -323,7 +323,7 @@ namespace Tradier.Client
         /// <summary>
         /// Modify an order using the default account number. You may change some or all of these parameters.
         /// </summary>
-        public async Task<OrderReponse> ModifyOrder(string orderId, string type = null, string duration = null, string price = null, string stop = null)
+        public async Task<OrderReponse> ModifyOrder(string orderId, string type = null, string duration = null, double? price = null, double? stop = null)
         {
             if (string.IsNullOrEmpty(_defaultAccountNumber))
             {
@@ -336,14 +336,14 @@ namespace Tradier.Client
         /// <summary>
         /// Modify an order. You may change some or all of these parameters.
         /// </summary>
-        public async Task<OrderReponse> ModifyOrder(string accountNumber, string orderId, string type = null, string duration = null, string price = null, string stop = null)
+        public async Task<OrderReponse> ModifyOrder(string accountNumber, string orderId, string type = null, string duration = null, double? price = null, double? stop = null)
         {
             var data = new Dictionary<string, string>
             {
                 { "type", type },
                 { "duration", duration },
-                { "price", price },
-                { "stop", stop },
+                { "price", price.HasValue ? price.ToString() : "" },
+                { "stop", stop.HasValue ? stop.ToString() : "" },
             };
 
             var response = await _requests.PutRequest($"accounts/{accountNumber}/orders/{orderId}", data);
