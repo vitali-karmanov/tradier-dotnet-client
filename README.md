@@ -93,13 +93,12 @@ Securities lookup1 = await client.MarketData.LookupSymbol("goog");
 ### [Trading](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki/Using-Trading-methods)
 
 ```csharp
-IOrder order = await client.Trading.PlaceEquityOrder(accountNumber, "AAPL", "buy", 10, "market", "day");
+IOrder order = await client.Trading.PlaceEquityOrder(accountNumber, "SPY", "buy", 10, "limit", "day", 1.00, preview: true);
 IOrder order = await client.Trading.PlaceOptionOrder(accountNumber, "SPY", "SPY140118C00195000", "buy_to_open", 10, "market", "day", preview: true);
-IOrder order = await client.Trading.PlaceMultilegOrder(accountNumber, "MFA", "credit", "day", new List<(string, string, int)> { ("AAPL", "buy", 10), ("IBM", "buy", 5) }, 1.00);
-IOrder order = await client.Trading.PlaceComboOrder(accountNumber, "MFA", "credit", "day", new List<(string, string, int)> { ("AAPL", "buy", 10), ("IBM", "buy", 5) }, 1.00);
-IOrder order = await client.Trading.PlaceOtoOrder(accountNumber, "day", new List<(string, int, string, string, string, double?, double?)> { ("SPY", 10, "limit", "SPY190605C00282000", "buy_to_open", 1.00, 1.00) });
-IOrder order = await client.Trading.PlaceOcoOrder(accountNumber, "day", new List<(string, int, string, string, string, double?, double?)> { ("SPY", 10, "limit", "SPY190605C00282000", "buy_to_open", 1.00, 1.00) });
-IOrder order = await client.Trading.PlaceOtocoOrder(accountNumber, "day", new List<(string, int, string, string, string, double?, double?)> { ("SPY", 10, "limit", "SPY190605C00282000", "buy_to_open", 1.00, 1.00) });
+IOrder order = await client.Trading.PlaceMultilegOrder(accountNumber, "SPY", "limit", "day", new List<(string, string, int)> { ("SPY190605C00282000", "buy_to_open", 10), ("SPY190605C00286000", "buy_to_close", 10) }, 1.00);
+IOrder order = await client.Trading.PlaceComboOrder(accountNumber, "SPY", "limit", "day", new List<(string, string, int)> { ("SPY", "buy", 1), ("SPY140118C00195000", "buy_to_open", 1) }, 1.00);
+IOrder order = await client.Trading.PlaceOtoOrder(accountNumber, "day", new List<(string, int, string, string, string, double?, double?)> { ("SPY", 1, "limit", "SPY140118C00195000", "buy_to_open", 1.00, null), ("SPY", 1, "limit", "SPY140118C00195000", "sell_to_close", 1.10, null) });
+IOrder order = await client.Trading.PlaceOcoOrder(accountNumber, "day", new List<(string, int, string, string, string, double?, double?)> { ("SPY", 1, "limit", "SPY140118C00195000", "buy_to_open", 1.00, null), ("SPY", 1, "limit", "SPY140118C00195000", "sell_to_close", 1.10, null) });
 IOrder order = await client.Trading.ModifyOrder(accountNumber, orderId, "limit", "day", 1.00, 1.00);
 IOrder order = await client.Trading.CancelOrder(accountNumber, orderId);
 ```
