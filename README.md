@@ -60,12 +60,12 @@ The client is separated into different sections and follows the [API documentati
 ### [Account](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki/Using-Account-methods)
 ```csharp
 Profile userProfile = await client.Account.GetUserProfile();
-Balances balance = await client.Account.GetBalances(accountNumber);
-Positions positions = await client.Account.GetPositions(accountNumber);
-History history = await client.Account.GetHistory(accountNumber);
-GainLoss gainLoss = await client.Account.GetGainLoss(accountNumber);
-Orders orders = await client.Account.GetOrders(accountNumber);
-Order order = await client.Account.GetOrder(accountNumber, orderId);
+Balances balance = await client.Account.GetBalances();
+Positions positions = await client.Account.GetPositions();
+History history = await client.Account.GetHistory();
+GainLoss gainLoss = await client.Account.GetGainLoss();
+Orders orders = await client.Account.GetOrders();
+Order getOrder = await client.Account.GetOrder(orders.Order.FirstOrDefault().Id);
 ```
 
 ### [Authentication](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki/Using-Authentication-methods)
@@ -78,12 +78,12 @@ Token authentication = await client.Authentication.RefreshAccessToken("<TOKEN>")
 ```csharp
 Quotes quotes = await client.MarketData.GetQuotes("AAPL, NFLX");
 Quotes quotes1 = await client.MarketData.PostGetQuotes("AAPL, NFLX");
-Options options = await client.MarketData.GetOptionChain("AAPL", "May 27, 2020");
-Strikes strikes = await client.MarketData.GetStrikes("UNG", "May 15, 2020");
+Options options = await client.MarketData.GetOptionChain("AAPL", "August 21, 2020");
+Strikes strikes = await client.MarketData.GetStrikes("UNG", "August 21, 2020");
 Expirations expirations = await client.MarketData.GetOptionExpirations("AAPL");
 List<Symbol> lookup = await client.MarketData.LookupOptionSymbols("SPY");
 HistoricalQuotes historicalQuotes = await client.MarketData.GetHistoricalQuotes("AAPL", "daily", "January 1, 2020", "May 15, 2020");
-Series timeSales = await client.MarketData.GetTimeSales("AAPL", "1min", "June 15, 2020", "June 22, 2020");
+Series timeSales = await client.MarketData.GetTimeSales("AAPL", "1min", "July 1, 2020", "July 11, 2020");
 Securities securities = await client.MarketData.GetEtbSecurities();
 Clock clock = await client.MarketData.GetClock();
 Calendar calendar = await client.MarketData.GetCalendar();
@@ -93,26 +93,26 @@ Securities lookup1 = await client.MarketData.LookupSymbol("goog");
 ### [Trading](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki/Using-Trading-methods)
 
 ```csharp
-OrderReponse order = (OrderReponse) await client.Trading.PlaceEquityOrder(accountNumber, "SPY", "buy", 10, "limit", "day", 1.00, preview: true);
-OrderReponse order = (OrderReponse) await client.Trading.PlaceOptionOrder(accountNumber, "SPY", "SPY140118C00195000", "buy_to_open", 10, "market", "day", preview: true);
-OrderReponse order = (OrderReponse) await client.Trading.PlaceMultilegOrder(accountNumber, symbol, "debit", "day", new List<(string, string, int)> { ("WMT200717C00129000", "buy_to_open", 1), ("WMT200717C00132000", "sell_to_open", 1) }, 1.30);
-OrderReponse order = (OrderReponse) await client.Trading.PlaceComboOrder(accountNumber, "SPY", "limit", "day", new List<(string, string, int)> { ("SPY", "buy", 1), ("SPY140118C00195000", "buy_to_open", 1) }, 1.00);
-OrderReponse order = (OrderReponse) await client.Trading.PlaceOtoOrder(accountNumber, "day", new List<(string, int, string, string, string, double?, double?)> { ("SPY", 1, "limit", "SPY140118C00195000", "buy_to_open", 1.00, null), ("SPY", 1, "limit", "SPY140118C00195000", "sell_to_close", 1.10, null) });
-OrderReponse order = (OrderReponse) await client.Trading.PlaceOcoOrder(accountNumber, "day", new List<(string, int, string, string, string, double?, double?)> { ("SPY", 1, "limit", "SPY140118C00195000", "buy_to_open", 1.00, null), ("SPY", 1, "limit", "SPY140118C00195000", "sell_to_close", 1.10, null) });
-OrderReponse order = (OrderReponse) await client.Trading.ModifyOrder(accountNumber, orderId, "limit", "day", 1.00, 1.00);
-OrderReponse order = (OrderReponse) await client.Trading.CancelOrder(accountNumber, orderId);
+OrderPreviewResponse order = (OrderPreviewResponse) await client.Trading.PlaceEquityOrder("WMT", "buy", 10, "limit", "day", 1.00, preview: true);
+OrderReponse order1 = (OrderReponse) await client.Trading.PlaceOptionOrder("WMT", "WMT200717C00129000", "buy_to_open", 1, "limit", "day", 10.00);
+OrderReponse order2 = (OrderReponse) await client.Trading.PlaceMultilegOrder("WMT", "debit", "day", new List<(string, string, int)> { ("WMT200717C00129000", "buy_to_open", 1), ("WMT200717C00132000", "sell_to_open", 1) }, 1.30);
+OrderReponse order3 = (OrderReponse) await client.Trading.PlaceComboOrder("SPY", "limit", "day", new List<(string, string, int)> { ("SPY", "buy", 1), ("SPY140118C00195000", "buy_to_open", 1) }, 1.00);
+OrderReponse order4 = (OrderReponse) await client.Trading.PlaceOtoOrder("day", new List<(string, int, string, string, string, double?, double?)> { ("WMT", 1, "limit", "WMT200717C00129000", "buy_to_open", 1.00, null), ("WMT", 1, "limit", "WMT200717C00129000", "sell_to_close", 1.10, null) });
+OrderReponse order5 = (OrderReponse) await client.Trading.PlaceOcoOrder("day", new List<(string, int, string, string, string, double?, double?)> { ("SPY", 1, "limit", "SPY140118C00195000", "buy_to_open", 1.00, null), ("SPY", 1, "limit", "SPY140118C00195000", "sell_to_close", 1.10, null) });
+OrderReponse order6 = await client.Trading.ModifyOrder(order1.Id, "limit", "day", 5.00);
+order1 = await client.Trading.CancelOrder(order1.Id);
 ```
 
 ### [Watchlist](https://github.com/vitali-karmanov/tradier-dotnet-client/wiki/Using-Watchlist-methods)
 
 ```csharp
 Watchlists watchlists = await client.Watchlist.GetWatchlists();
-Watchlist dafaultWatchlist = await client.Watchlist.GetWatchlist("<WATCHLIST_ID>");
 Watchlist newWatchlist = await client.Watchlist.CreateWatchlist("My Watchlist", "AAPL,IBM");
-Watchlist updatedWatchlist = await client.Watchlist.UpdateWatchlist("my-watchlist", "My First Watchlist", "SPY");
-Watchlists deleteWatclist = await client.Watchlist.DeleteWatchlist("my-watchlist");
-await client.Watchlist.AddSymbolsToWatchlist("my-watchlist", "NFLX");
-await client.Watchlist.RemoveSymbolFromWatchlist("my-watchlist", "AAPL");
+Watchlist dafaultWatchlist = await client.Watchlist.GetWatchlist(newWatchlist.Id);
+Watchlist updatedWatchlist = await client.Watchlist.UpdateWatchlist(newWatchlist.Id, "My First Watchlist", "SPY");
+Watchlist addSymbolWatchlist = await client.Watchlist.AddSymbolsToWatchlist(newWatchlist.Id, "NFLX");
+Watchlist removeSymbolFromWatchlist = await client.Watchlist.RemoveSymbolFromWatchlist(newWatchlist.Id, "NFLX");
+Watchlists deleteWatclist = await client.Watchlist.DeleteWatchlist(newWatchlist.Id);
 ```
 
 <br/>
