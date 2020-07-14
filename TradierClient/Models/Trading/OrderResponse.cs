@@ -12,7 +12,7 @@ namespace Tradier.Client.Models.Trading
     public class OrderReponse : IOrder
     {
         [JsonProperty("id")]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("status")]
         public string Status { get; set; }

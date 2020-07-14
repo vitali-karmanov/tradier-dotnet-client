@@ -135,6 +135,7 @@ namespace Tradier.Client
                 { "duration", duration },
                 { "price", price.ToString() },
                 { "stop", stop.ToString() },
+                { "preview", preview.ToString() }
             };
 
             var response = await _requests.PostRequest($"accounts/{accountNumber}/orders", data);
@@ -323,7 +324,7 @@ namespace Tradier.Client
         /// <summary>
         /// Modify an order using the default account number. You may change some or all of these parameters.
         /// </summary>
-        public async Task<OrderReponse> ModifyOrder(string orderId, string type = null, string duration = null, double? price = null, double? stop = null)
+        public async Task<OrderReponse> ModifyOrder(int orderId, string type = null, string duration = null, double? price = null, double? stop = null)
         {
             if (string.IsNullOrEmpty(_defaultAccountNumber))
             {
@@ -336,7 +337,7 @@ namespace Tradier.Client
         /// <summary>
         /// Modify an order. You may change some or all of these parameters.
         /// </summary>
-        public async Task<OrderReponse> ModifyOrder(string accountNumber, string orderId, string type = null, string duration = null, double? price = null, double? stop = null)
+        public async Task<OrderReponse> ModifyOrder(string accountNumber, int orderId, string type = null, string duration = null, double? price = null, double? stop = null)
         {
             var data = new Dictionary<string, string>
             {
@@ -353,7 +354,7 @@ namespace Tradier.Client
         /// <summary>
         /// Cancel an order using the default account number
         /// </summary>
-        public async Task<OrderReponse> CancelOrder(string orderId)
+        public async Task<OrderReponse> CancelOrder(int orderId)
         {
             if (string.IsNullOrEmpty(_defaultAccountNumber))
             {
@@ -366,7 +367,7 @@ namespace Tradier.Client
         /// <summary>
         /// Cancel an order using the default account number
         /// </summary>
-        public async Task<OrderReponse> CancelOrder(string accountNumber, string orderId)
+        public async Task<OrderReponse> CancelOrder(string accountNumber, int orderId)
         {
             var response = await _requests.DeleteRequest($"accounts/{accountNumber}/orders/{orderId}");
             return JsonConvert.DeserializeObject<OrderResponseRootobject>(response).OrderReponse;
