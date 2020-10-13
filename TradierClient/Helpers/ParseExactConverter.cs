@@ -11,7 +11,7 @@ namespace Tradier.Client.Helpers
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            writer.WriteRawValue(((DateTime)value).ToString());
+            writer.WriteRawValue(("\"" + (DateTime)value).ToString() + "\"");
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
