@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Tradier.Client.Exceptions;
 
 namespace Tradier.Client.Helpers
 {
@@ -19,7 +20,11 @@ namespace Tradier.Client.Helpers
             using var request = new HttpRequestMessage(method, uri);
             using var response = await _httpClient.SendAsync(request);
             {
-                response.EnsureSuccessStatusCode();
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new TradierClientException(response);
+                }
+
                 var content = await response.Content.ReadAsStringAsync();
                 content = content.Replace("\"null\"", "null");
 
@@ -46,7 +51,11 @@ namespace Tradier.Client.Helpers
         {
             using var response = await _httpClient.PutAsync(uri, new FormUrlEncodedContent(values));
             {
-                response.EnsureSuccessStatusCode();
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new TradierClientException(response);
+                }
+
                 var content = await response.Content.ReadAsStringAsync();
                 content = content.Replace("\"null\"", "null");
 
@@ -58,7 +67,11 @@ namespace Tradier.Client.Helpers
         {
             using var response = await _httpClient.PostAsync(uri, values == null ? null : new FormUrlEncodedContent(values));
             {
-                response.EnsureSuccessStatusCode();
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new TradierClientException(response);
+                }
+
                 var content = await response.Content.ReadAsStringAsync();
                 content = content.Replace("\"null\"", "null");
 
