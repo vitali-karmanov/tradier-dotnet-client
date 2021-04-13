@@ -91,11 +91,15 @@ namespace Tradier.Client
         /// </summary>
         public async Task<HistoricalQuotes> GetHistoricalQuotes(string symbol, string interval, DateTime start, DateTime end)
         {
-
             string stringStart = start.ToString("yyyy-MM-dd");
             string stringEnd = end.ToString("yyyy-MM-dd");
 
             var response = await _requests.GetRequest($"markets/history?symbol={symbol}&interval={interval}&start={stringStart}&end={stringEnd}");
+            if (response.Contains("{\"day\":{"))
+            {
+                response = response.Replace("{\"day\":{", "{\"day\":[{");
+                response = response.Replace("}}}", "}]}}");
+            }
             return JsonConvert.DeserializeObject<HistoricalQuotesRootobject>(response).History;
         }
 
