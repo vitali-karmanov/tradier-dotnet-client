@@ -25,6 +25,6 @@ namespace Tradier.Client.Models.MarketData
 
         [JsonProperty("close")] public float Close { get; set; }
 
-        [JsonProperty("volume")] public int Volume { get; set; }
+        [JsonProperty("volume")] public long Volume { get; set; }
     }
 }
