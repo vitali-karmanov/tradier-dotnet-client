@@ -51,7 +51,7 @@ namespace Tradier.Client.Models.MarketData
         public float? Low { get; set; }
 
         [JsonProperty("close")]
-        public object Close { get; set; }
+        public float? Close { get; set; }
 
         [JsonProperty("bid")]
         public float Bid { get; set; }
