@@ -1,32 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using NUnit.Framework;
-using Tradier.Client;
 using Tradier.Client.Models.Streaming;
-using TradierClientTest.Helpers;
+using TradierClient.Test.Helpers;
 
-namespace TradierClientTest
+namespace TradierClient.Test
 {
     public class StreamingTests
     {
-        private TradierClient _client;
-        private TradierClientConfiguration _configuration;
+        private Tradier.Client.TradierClient _client;
+        private Settings _settings;
         private Stream _session;
 
         [SetUp]
         public void Init()
         {
-            _configuration = TestHelper.GetApplicationConfiguration(TestContext.CurrentContext.TestDirectory);
+            _settings = Configuration.GetApplicationConfiguration(TestContext.CurrentContext.TestDirectory);
         }
 
         [SetUp]
         public void Setup()
         {
-            var apiToken = _configuration.ApiToken;
-            _client = new TradierClient(apiToken, true);
+            // Use SandBox API Token
+            //var sandboxApiToken = _settings.SandboxApiToken;
+            //_client = new Tradier.Client.TradierClient(sandboxApiToken);
+
+            //Use Production API Token
+            var apiToken = _settings.ApiToken;
+            _client = new Tradier.Client.TradierClient(apiToken, true);
 
             _session = _client.Streaming.CreateMarketSession();
         }
