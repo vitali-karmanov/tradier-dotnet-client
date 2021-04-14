@@ -16,8 +16,7 @@ namespace Tradier.Client
         public Trading Trading { get; set; }
         public WatchlistEndpoint Watchlist { get; set; }
 
-        // TODO: Coming soon
-        //public Streaming Streaming { get; set; }
+        public Streaming Streaming { get; set; }
 
         /// <summary>
         /// The TradierClient constructor (with an existing HttpClient)
@@ -39,7 +38,7 @@ namespace Tradier.Client
             Watchlist = new WatchlistEndpoint(request);
 
             // TODO: Coming soon
-            //Streaming = new Streaming(request);
+            Streaming = new Streaming(apiToken, useProduction);
         }
 
         /// <summary>
