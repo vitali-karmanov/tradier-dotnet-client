@@ -95,11 +95,6 @@ namespace Tradier.Client
             string stringEnd = end.ToString("yyyy-MM-dd");
 
             var response = await _requests.GetRequest($"markets/history?symbol={symbol}&interval={interval}&start={stringStart}&end={stringEnd}");
-            if (response.Contains("{\"day\":{"))
-            {
-                response = response.Replace("{\"day\":{", "{\"day\":[{");
-                response = response.Replace("}}}", "}]}}");
-            }
             return JsonConvert.DeserializeObject<HistoricalQuotesRootobject>(response).History;
         }
 
