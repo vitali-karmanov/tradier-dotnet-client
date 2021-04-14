@@ -91,7 +91,6 @@ namespace Tradier.Client
         /// </summary>
         public async Task<HistoricalQuotes> GetHistoricalQuotes(string symbol, string interval, DateTime start, DateTime end)
         {
-
             string stringStart = start.ToString("yyyy-MM-dd");
             string stringEnd = end.ToString("yyyy-MM-dd");
 
