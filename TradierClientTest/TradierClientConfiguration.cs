@@ -1,4 +1,4 @@
-﻿namespace Tradier.Client
+﻿namespace TradierClientTest
 {
     public class TradierClientConfiguration
     {
