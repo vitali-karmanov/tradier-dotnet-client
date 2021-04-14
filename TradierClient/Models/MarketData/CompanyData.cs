@@ -125,7 +125,7 @@ namespace Tradier.Client.Models.MarketData
         public string ProfitabilityGrade { get; set; }
 
         [JsonProperty("size_score")]
-        public int SizeScore { get; set; }
+        public float SizeScore { get; set; }
 
         [JsonProperty("stock_type")]
         public int StockType { get; set; }
@@ -134,10 +134,10 @@ namespace Tradier.Client.Models.MarketData
         public int StyleBox { get; set; }
 
         [JsonProperty("style_score")]
-        public int StyleScore { get; set; }
+        public float StyleScore { get; set; }
 
         [JsonProperty("value_score")]
-        public int ValueScore { get; set; }
+        public float ValueScore { get; set; }
     }
 
     public class AssetClassification : AssetClassificationBase
@@ -157,7 +157,7 @@ namespace Tradier.Client.Models.MarketData
         public DateTime GrowthGradeAsOfDate { get; set; }
 
         [JsonProperty("n_a_c_e")]
-        public int Nace { get; set; }
+        public float Nace { get; set; }
 
         [JsonProperty("n_a_i_c_s")]
         public int Naics { get; set; }

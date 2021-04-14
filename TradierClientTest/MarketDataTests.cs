@@ -58,5 +58,52 @@ namespace TradierClientTest
             Assert.AreEqual(firstDay.Date, start.ToString("yyyy-MM-dd"));
             Assert.NotZero(firstDay.Open);
         }
+
+        [Test]
+        [TestCase("AAPL")]
+        [TestCase("AAPL,GOOG")]
+        public async Task GetCompanyInfoTest(string symbols)
+        {
+            var result = await _client.MarketData.GetCompany(symbols);
+
+            var companyData = result.FirstOrDefault().Results.FirstOrDefault(x => x.Tables?.CompanyProfile != null);
+            Assert.IsNotNull(companyData);
+            Assert.IsNotNull(companyData?.Tables?.CompanyProfile?.CompanyId);
+        }
+
+        [Test]
+        [TestCase("AAPL")]
+        [TestCase("AAPL,GOOG")]
+        public async Task GetCorporateCalendarTest(string symbols)
+        {
+            var result = await _client.MarketData.GetCorporateCalendars(symbols);
+
+            var companyData = result.FirstOrDefault().Results.FirstOrDefault(x => x.Tables?.CorporateCalendars != null);
+            Assert.IsNotNull(companyData);
+            Assert.IsNotNull(companyData?.Tables?.CorporateCalendars?.FirstOrDefault()?.CompanyId);
+        }
+
+        [Test]
+        public async Task GetEtbSecuritiesTest()
+        {
+            var result = await _client.MarketData.GetEtbSecurities();
+            Assert.IsNotNull(result.Security.FirstOrDefault()?.Symbol);
+        }
+
+        [Test]
+        [TestCase("Alphabet")]
+        public async Task SearchCompaniesTest(string symbol)
+        {
+            var result = await _client.MarketData.SearchCompanies(symbol);
+            Assert.IsNotNull(result.Security.FirstOrDefault()?.Symbol);
+        }
+
+        [Test]
+        [TestCase("GOOG")]
+        public async Task LookupSymbolTest(string query)
+        {
+            var result = await _client.MarketData.LookupSymbol(query);
+            Assert.IsNotNull(result.Security.FirstOrDefault()?.Symbol);
+        }
     }
 }
