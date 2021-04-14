@@ -1,6 +1,6 @@
-﻿namespace TradierClientTest
+﻿namespace TradierClient.Test.Helpers
 {
-    public class TradierClientConfiguration
+    public class Settings
     {
         public string ApiToken { get; set; }
         public string SandboxApiToken { get; set; }

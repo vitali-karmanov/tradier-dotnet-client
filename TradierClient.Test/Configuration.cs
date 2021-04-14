@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
+using TradierClient.Test.Helpers;
 
-namespace TradierClientTest.Helpers
+namespace TradierClient.Test
 {
-    public class TestHelper
+    public static class Configuration
     {
         public static IConfigurationRoot GetIConfigurationRoot(string outputPath)
         {
@@ -14,17 +15,16 @@ namespace TradierClientTest.Helpers
                 .Build();
         }
 
-        public static TradierClientConfiguration GetApplicationConfiguration(string outputPath)
+        public static Settings GetApplicationConfiguration(string outputPath)
         {
-            var configuration = new TradierClientConfiguration();
+            var settings = new Settings();
 
-            var iConfig = GetIConfigurationRoot(outputPath);
+            var config = GetIConfigurationRoot(outputPath);
 
-            iConfig
-                .GetSection("TradierClientSettings")
-                .Bind(configuration);
+            config.GetSection("TradierClientSettings")
+                .Bind(settings);
 
-            return configuration;
+            return settings;
         }
     }
 }

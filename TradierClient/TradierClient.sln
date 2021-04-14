@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradierClient", "TradierClient.csproj", "{771DA36C-CE7C-4CF2-9381-887E00D8AB15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradierClientTest", "..\TradierClientTest\TradierClientTest.csproj", "{5ADB6837-5B22-45B9-A2BA-7FB389335667}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradierClient.Test", "..\TradierClient.Test\TradierClient.Test.csproj", "{5ADB6837-5B22-45B9-A2BA-7FB389335667}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
