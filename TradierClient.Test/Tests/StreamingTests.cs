@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using NUnit.Framework;
-using Tradier.Client;
 using Tradier.Client.Models.Streaming;
 using TradierClient.Test.Helpers;
 
