@@ -27,8 +27,19 @@ namespace TradierClient.Test.Tests
             _client = new Tradier.Client.TradierClient(sandboxApiToken);
 
             //Use Production API Token
-            //var apiToken = _configuration.ApiToken;
-            //_client = new TradierClient(apiToken, true);
+            //var apiToken = _settings.ApiToken;
+            //_client = new Tradier.Client.TradierClient(apiToken, true);
+        }
+
+        [Test]
+        [TestCase("CKH", false)]
+        public async Task PostGetQuotesForSingleSymbol(string symbols, bool greeks)
+        {
+            var result = await _client.MarketData.PostGetQuotes(symbols, greeks);
+            Assert.IsNotNull(result.Quote);
+            Assert.AreEqual(1, result.Quote.Count);
+
+            var firstDay = result.Quote.First();
         }
 
         [Test]
