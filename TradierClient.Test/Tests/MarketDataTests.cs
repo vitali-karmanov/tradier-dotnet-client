@@ -36,10 +36,8 @@ namespace TradierClient.Test.Tests
         public async Task PostGetQuotesForSingleSymbol(string symbols, bool greeks)
         {
             var result = await _client.MarketData.PostGetQuotes(symbols, greeks);
-            Assert.IsNotNull(result.Quote);
+            Assert.IsNotNull(result.Quote.First());
             Assert.AreEqual(1, result.Quote.Count);
-
-            var firstDay = result.Quote.First();
         }
 
         [Test]
