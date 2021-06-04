@@ -41,18 +41,15 @@ namespace Tradier.Client.Models.MarketData
         public string CompanyId { get; set; }
 
         [JsonProperty("begin_date_time")]
-        [JsonConverter(typeof(YYYYMMDDConverter))]
         public DateTime BeginDateTime { get; set; }
 
         [JsonProperty("end_date_time")]
-        [JsonConverter(typeof(YYYYMMDDConverter))]
         public DateTime EndDateTime { get; set; }
 
         [JsonProperty("event_type")]
         public int EventType { get; set; }
 
         [JsonProperty("estimated_date_for_next_event")]
-        [JsonConverter(typeof(YYYYMMDDConverter))]
         public DateTime EstimatedDateForNextEvent { get; set; }
 
         [JsonProperty("event")]
@@ -65,7 +62,6 @@ namespace Tradier.Client.Models.MarketData
         public string EventStatus { get; set; }
 
         [JsonProperty("time_zone")]
-        [JsonConverter(typeof(YYYYMMDDConverter))]
         public DateTime TimeZone { get; set; }
     }
 }

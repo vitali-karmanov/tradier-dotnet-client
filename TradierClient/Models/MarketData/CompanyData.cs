@@ -67,7 +67,6 @@ namespace Tradier.Client.Models.MarketData
         public int TotalEmployeeNumber { get; set; }
 
         [JsonProperty("TotalEmployeeNumber.asOfDate")]
-        [JsonConverter(typeof(YYYYMMDDConverter))]
         public DateTime TotalEmployeeNumberAsOfDate { get; set; }
 
         [JsonProperty("headquarter")]
@@ -146,14 +145,12 @@ namespace Tradier.Client.Models.MarketData
         public int Cannaics { get; set; }
 
         [JsonProperty("FinancialHealthGrade.asOfDate")]
-        [JsonConverter(typeof(YYYYMMDDConverter))]
         public DateTime FinancialHealthGradeAsOfDate { get; set; }
 
         [JsonProperty("growth_grade")]
         public string GrowthGrade { get; set; }
 
         [JsonProperty("GrowthGrade.asOfDate")]
-        [JsonConverter(typeof(YYYYMMDDConverter))]
         public DateTime GrowthGradeAsOfDate { get; set; }
 
         [JsonProperty("n_a_c_e")]
@@ -163,25 +160,21 @@ namespace Tradier.Client.Models.MarketData
         public int Naics { get; set; }
 
         [JsonProperty("ProfitabilityGrade.asOfDate")]
-        [JsonConverter(typeof(YYYYMMDDConverter))]
         public DateTime ProfitabilityGradeAsOfDate { get; set; }
 
         [JsonProperty("s_i_c")]
         public int Sic { get; set; }
 
         [JsonProperty("StockType.asOfDate")]
-        [JsonConverter(typeof(YYYYMMDDConverter))]
         public DateTime StockTypeAsOfDate { get; set; }
 
         [JsonProperty("StyleBox.asOfDate")]
-        [JsonConverter(typeof(YYYYMMDDConverter))]
         public DateTime StyleBoxAsOfDate { get; set; }
     }
 
     public class HistoricalAssetClassification : AssetClassificationBase
     {
         [JsonProperty("as_of_date")]
-        [JsonConverter(typeof(YYYYMMDDConverter))]
         public DateTime AsOfDate { get; set; }
     }
 }
