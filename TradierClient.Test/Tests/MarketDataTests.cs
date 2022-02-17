@@ -52,6 +52,15 @@ namespace TradierClient.Test.Tests
 		}
 
         [Test]
+        [TestCase("TSLA230120C00900000", true)]
+        public async Task PostGetQuotesAndGreeksForOptionSymbol(string symbols, bool greeks)
+        {
+            var result = await _client.MarketData.PostGetQuotes(symbols, greeks);
+            Assert.IsNotNull(result.Quote.First());
+            Assert.AreEqual(1, result.Quote.Count);
+        }
+
+        [Test]
         [TestCase("GME", "daily")]
         public async Task GetMultiDayHistoricalQuotesTest(string symbol, string interval)
         {
