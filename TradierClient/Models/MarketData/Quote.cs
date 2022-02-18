@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using Tradier.Client.Helpers;
 
 namespace Tradier.Client.Models.MarketData
 {
-
     public class QuoteRootobject
     {
         [JsonProperty("quotes")]
@@ -19,8 +19,10 @@ namespace Tradier.Client.Models.MarketData
     }
 
     public class Quote
-    {
-        [JsonProperty("symbol")]
+	{
+		public static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+		[JsonProperty("symbol")]
         public string Symbol { get; set; }
 
         [JsonProperty("description")]
@@ -71,6 +73,9 @@ namespace Tradier.Client.Models.MarketData
         [JsonProperty("trade_date")]
         public long TradeDate { get; set; }
 
+		[JsonIgnore]
+		public DateTime TradeDateTime => UnixEpoch.AddMilliseconds(TradeDate);
+
         [JsonProperty("prevclose")]
         public float? Prevclose { get; set; }
 
@@ -89,7 +94,10 @@ namespace Tradier.Client.Models.MarketData
         [JsonProperty("bid_date")]
         public long BidDate { get; set; }
 
-        [JsonProperty("asksize")]
+		[JsonIgnore]
+		public DateTime BidDateTime => UnixEpoch.AddMilliseconds(BidDate);
+
+		[JsonProperty("asksize")]
         public int Asksize { get; set; }
 
         [JsonProperty("askexch")]
@@ -98,7 +106,10 @@ namespace Tradier.Client.Models.MarketData
         [JsonProperty("ask_date")]
         public long AskDate { get; set; }
 
-        [JsonProperty("root_symbols")]
+		[JsonIgnore]
+		public DateTime AskDateTime => UnixEpoch.AddMilliseconds(AskDate);
+
+		[JsonProperty("root_symbols")]
         public string RootSymbols { get; set; }
 
         [JsonProperty("underlying")]
@@ -116,7 +127,10 @@ namespace Tradier.Client.Models.MarketData
         [JsonProperty("expiration_date")]
         public string ExpirationDate { get; set; }
 
-        [JsonProperty("expiration_type")]
+		[JsonIgnore]
+		public DateTime ExpirationDateTime => DateTime.Parse(ExpirationDate);
+
+		[JsonProperty("expiration_type")]
         public string ExpirationType { get; set; }
 
         [JsonProperty("option_type")]

@@ -32,7 +32,7 @@ namespace TradierClient.Test.Tests
         }
 
         [Test]
-        [TestCase("CKH", false)]
+        [TestCase("TSLA", false)]
         public async Task PostGetQuotesForSingleSymbol(string symbols, bool greeks)
         {
             var result = await _client.MarketData.PostGetQuotes(symbols, greeks);
