@@ -15,13 +15,13 @@ namespace TradierClient.Test
                 .Build();
         }
 
-        public static Settings GetApplicationConfiguration(string outputPath)
+        public static TradierClientSettings GetApplicationConfiguration(string outputPath)
         {
-            var settings = new Settings();
+            var settings = new TradierClientSettings();
 
             var config = GetIConfigurationRoot(outputPath);
 
-            config.GetSection("TradierClientSettings")
+            config.GetSection("AppSettings:TradierClientSettings")
                 .Bind(settings);
 
             return settings;
