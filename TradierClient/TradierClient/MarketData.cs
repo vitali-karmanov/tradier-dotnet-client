@@ -177,7 +177,9 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// The ETB list contains securities that are able to be sold short with a Tradier Brokerage account.
+        /// Get the intraday market status. This call will change and return information pertaining to the
+        /// current day. If programming logic on whether the market is open/closed – this API call should
+        /// be used to determine the current state.
         /// </summary>
         public async Task<Clock> GetClock()
         {
@@ -195,7 +197,8 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Get the market calendar for the current or given month
+        /// Get a list of symbols using a keyword lookup on the symbols description. Results are in
+        /// descending order by average volume of the security. This can be used for simple search functions.
         /// </summary>
         public async Task<Securities> SearchCompanies(string query, bool indexes = false)
         {
