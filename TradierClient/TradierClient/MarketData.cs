@@ -232,5 +232,20 @@ namespace Tradier.Client
             var response = await _requests.GetRequest($"markets/options/lookup?underlying={symbol}");
             return JsonConvert.DeserializeObject<OptionSymbolsRootobject>(response).Symbols;
         }
+
+        /// Fundamentals (BETA)
+        /// 
+
+        public async Task<List<CompanyDataRootObject>> GetCompany(string symbols)
+        {
+            var response = await _requests.GetRequest($"/beta/markets/fundamentals/company?symbols={symbols}");
+            return JsonConvert.DeserializeObject<List<CompanyDataRootObject>>(response);
+        }
+
+        public async Task<List<CorporateCalendarRootObject>> GetCorporateCalendars(string symbols)
+        {
+            var response = await _requests.GetRequest($"/beta/markets/fundamentals/calendars?symbols={symbols}");
+            return JsonConvert.DeserializeObject<List<CorporateCalendarRootObject>>(response);
+        }
     }
 }
