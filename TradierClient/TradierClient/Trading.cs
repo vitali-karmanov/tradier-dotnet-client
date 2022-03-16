@@ -28,20 +28,20 @@ namespace Tradier.Client
         /// <summary>
         /// Place an order using the default account number to trade a single option 
         /// </summary>
-        public async Task<IOrder> PlaceOptionOrder(string symbol, string optionSymbol, string side, int quantity, string type, string duration, double? price = null, double? stop = null, bool preview = false)
+        public async Task<IOrder> PlaceOptionOrder(string symbol, string optionSymbol, string side, int quantity, string type, string duration, double? price = null, double? stop = null, string tag = null, bool preview = false)
         {
             if (string.IsNullOrEmpty(_defaultAccountNumber))
             {
                 throw new MissingAccountNumberException("The default account number was not defined.");
             }
 
-            return await PlaceOptionOrder(_defaultAccountNumber, symbol, optionSymbol, side, quantity, type, duration, price, stop, preview);
+            return await PlaceOptionOrder(_defaultAccountNumber, symbol, optionSymbol, side, quantity, type, duration, price, stop, tag, preview);
         }
 
         /// <summary>
         /// Place an order to trade a single option
         /// </summary>
-        public async Task<IOrder> PlaceOptionOrder(string accountNumber, string symbol, string optionSymbol, string side, int quantity, string type, string duration, double? price = null, double? stop = null, bool preview = false)
+        public async Task<IOrder> PlaceOptionOrder(string accountNumber, string symbol, string optionSymbol, string side, int quantity, string type, string duration, double? price = null, double? stop = null, string tag = null, bool preview = false)
         {
             var data = new Dictionary<string, string>
             {
@@ -54,6 +54,7 @@ namespace Tradier.Client
                 { "duration", duration },
                 { "price", price.ToString() },
                 { "stop", stop.ToString() },
+                { "tag", tag },
                 { "preview", preview.ToString() }
             };
 
@@ -65,20 +66,21 @@ namespace Tradier.Client
         /// <summary>
         /// Place a multileg order using the default account number with up to 4 legs 
         /// </summary>
-        public async Task<IOrder> PlaceMultilegOrder(string symbol, string type, string duration, List<(string, string, int)> legs, double? price = null, bool preview = false)
+        public async Task<IOrder> PlaceMultilegOrder(string symbol, string type, string duration, List<(string, string, int)> legs, double? price = null, string tag = null, bool preview = false)
         {
             if (string.IsNullOrEmpty(_defaultAccountNumber))
             {
                 throw new MissingAccountNumberException("The default account number was not defined.");
             }
 
-            return await PlaceMultilegOrder(_defaultAccountNumber, symbol, type, duration, legs, price, preview);
+            return await PlaceMultilegOrder(_defaultAccountNumber, symbol, type, duration, legs, price, tag, preview);
         }
 
+        //TODO: Update with more sophistication for types of legs that can be placed.
         /// <summary>
         /// Place a multileg order with up to 4 legs
         /// </summary>
-        public async Task<IOrder> PlaceMultilegOrder(string accountNumber, string symbol, string type, string duration, List<(string, string, int)> legs, double? price = null, bool preview = false)
+        public async Task<IOrder> PlaceMultilegOrder(string accountNumber, string symbol, string type, string duration, List<(string, string, int)> legs, double? price = null, string tag = null, bool preview = false)
         {
             var data = new Dictionary<string, string>
             {
@@ -86,7 +88,9 @@ namespace Tradier.Client
                 { "symbol", symbol },
                 { "type", type },
                 { "duration", duration },
-                { "price", price.ToString() }
+                { "price", price.ToString() },
+                { "tag", tag },
+                { "preview", preview.ToString() }
             };
 
             int index = 0;
@@ -108,20 +112,20 @@ namespace Tradier.Client
         /// <summary>
         /// Place an order using the default account to trade an equity security
         /// </summary>
-        public async Task<IOrder> PlaceEquityOrder(string symbol, string side, int quantity, string type, string duration, double? price = null, double? stop = null, bool preview = false)
+        public async Task<IOrder> PlaceEquityOrder(string symbol, string side, int quantity, string type, string duration, double? price = null, double? stop = null, string tag = null, bool preview = false)
         {
             if (string.IsNullOrEmpty(_defaultAccountNumber))
             {
                 throw new MissingAccountNumberException("The default account number was not defined.");
             }
 
-            return await PlaceEquityOrder(_defaultAccountNumber, symbol, side, quantity, type, duration, price, stop, preview);
+            return await PlaceEquityOrder(_defaultAccountNumber, symbol, side, quantity, type, duration, price, stop, tag, preview);
         }
 
         /// <summary>
         /// Place an order to trade an equity security
         /// </summary>
-        public async Task<IOrder> PlaceEquityOrder(string accountNumber, string symbol, string side, int quantity, string type, string duration, double? price = null, double? stop = null, bool preview = false)
+        public async Task<IOrder> PlaceEquityOrder(string accountNumber, string symbol, string side, int quantity, string type, string duration, double? price = null, double? stop = null, string tag = null, bool preview = false)
         {
             var data = new Dictionary<string, string>
             {
@@ -134,6 +138,7 @@ namespace Tradier.Client
                 { "duration", duration },
                 { "price", price.ToString() },
                 { "stop", stop.ToString() },
+                { "tag", tag },
                 { "preview", preview.ToString() }
             };
 
@@ -145,20 +150,21 @@ namespace Tradier.Client
         /// <summary>
         /// Place a combo order using the default account number. This is a specialized type of order consisting of one equity leg and one option leg
         /// </summary>
-        public async Task<IOrder> PlaceComboOrder(string symbol, string type, string duration, List<(string, string, int)> legs, double? price = null, bool preview = false)
+        public async Task<IOrder> PlaceComboOrder(string symbol, string type, string duration, List<(string, string, int)> legs, double? price = null, string tag = null, bool preview = false)
         {
             if (string.IsNullOrEmpty(_defaultAccountNumber))
             {
                 throw new MissingAccountNumberException("The default account number was not defined.");
             }
 
-            return await PlaceComboOrder(_defaultAccountNumber, symbol, type, duration, legs, price, preview);
+            return await PlaceComboOrder(_defaultAccountNumber, symbol, type, duration, legs, price, tag, preview);
         }
 
+        //TODO: Update with more sophistication for types of legs that can be placed.
         /// <summary>
         /// Place a combo order. This is a specialized type of order consisting of one equity leg and one option leg
         /// </summary>
-        public async Task<IOrder> PlaceComboOrder(string accountNumber, string symbol, string type, string duration, List<(string, string, int)> legs, double? price = null, bool preview = false)
+        public async Task<IOrder> PlaceComboOrder(string accountNumber, string symbol, string type, string duration, List<(string, string, int)> legs, double? price = null, string tag = null, bool preview = false)
         {
             var data = new Dictionary<string, string>
             {
@@ -167,6 +173,8 @@ namespace Tradier.Client
                 { "type", type },
                 { "duration", duration },
                 { "price", price.ToString() },
+                { "tag", tag },
+                { "preview", preview.ToString() }
             };
 
             int index = 0;
@@ -188,25 +196,26 @@ namespace Tradier.Client
         /// <summary>
         /// Place a one-triggers-other order using the default account number. This order type is composed of two separate orders sent simultaneously
         /// </summary>
-        public async Task<IOrder> PlaceOtoOrder(string duration, List<(string, int, string, string, string, double?, double?)> legs, bool preview = false)
+        public async Task<IOrder> PlaceOtoOrder(string duration, List<(string, int, string, string, string, double?, double?)> legs, string tag = null, bool preview = false)
         {
             if (string.IsNullOrEmpty(_defaultAccountNumber))
             {
                 throw new MissingAccountNumberException("The default account number was not defined.");
             }
 
-            return await PlaceOtoOrder(_defaultAccountNumber, duration, legs, preview);
+            return await PlaceOtoOrder(_defaultAccountNumber, duration, legs, tag, preview);
         }
 
         /// <summary>
         /// Place a one-triggers-other order. This order type is composed of two separate orders sent simultaneously
         /// </summary>
-        public async Task<IOrder> PlaceOtoOrder(string accountNumber, string duration, List<(string, int, string, string, string, double?, double?)> legs, bool preview = false)
+        public async Task<IOrder> PlaceOtoOrder(string accountNumber, string duration, List<(string, int, string, string, string, double?, double?)> legs, string tag = null, bool preview = false)
         {
             var data = new Dictionary<string, string>
             {
                 { "class", "oto" },
                 { "duration", duration },
+                { "tag", tag },
                 { "preview", preview.ToString() }
             };
 
@@ -233,25 +242,26 @@ namespace Tradier.Client
         /// <summary>
         /// Place a one-cancels-other order using the default account number. This order type is composed of two separate orders sent simultaneously
         /// </summary>
-        public async Task<IOrder> PlaceOcoOrder(string duration, List<(string, int, string, string, string, double?, double?)> legs, bool preview = false)
+        public async Task<IOrder> PlaceOcoOrder(string duration, List<(string, int, string, string, string, double?, double?)> legs, string tag = null, bool preview = false)
         {
             if (string.IsNullOrEmpty(_defaultAccountNumber))
             {
                 throw new MissingAccountNumberException("The default account number was not defined.");
             }
 
-            return await PlaceOcoOrder(_defaultAccountNumber, duration, legs, preview);
+            return await PlaceOcoOrder(_defaultAccountNumber, duration, legs, tag, preview);
         }
 
         /// <summary>
         /// Place a one-cancels-other order. This order type is composed of two separate orders sent simultaneously
         /// </summary>
-        public async Task<IOrder> PlaceOcoOrder(string accountNumber, string duration, List<(string, int, string, string, string, double?, double?)> legs, bool preview = false)
+        public async Task<IOrder> PlaceOcoOrder(string accountNumber, string duration, List<(string, int, string, string, string, double?, double?)> legs, string tag = null, bool preview = false)
         {
             var data = new Dictionary<string, string>
             {
                 { "class", "oco" },
                 { "duration", duration },
+                { "tag", tag },
                 { "preview", preview.ToString() }
             };
 
@@ -278,25 +288,26 @@ namespace Tradier.Client
         /// <summary>
         /// Place a one-triggers-one-cancels-other order using the default account number. This order type is composed of three separate orders sent simultaneously
         /// </summary>
-        public async Task<IOrder> PlaceOtocoOrder(string duration, List<(string, int, string, string, string, double?, double?)> legs, bool preview = false)
+        public async Task<IOrder> PlaceOtocoOrder(string duration, List<(string, int, string, string, string, double?, double?)> legs, string tag = null, bool preview = false)
         {
             if (string.IsNullOrEmpty(_defaultAccountNumber))
             {
                 throw new MissingAccountNumberException("The default account number was not defined.");
             }
 
-            return await PlaceOtocoOrder(_defaultAccountNumber, duration, legs, preview);
+            return await PlaceOtocoOrder(_defaultAccountNumber, duration, legs, tag, preview);
         }
 
         /// <summary>
         /// Place a one-triggers-one-cancels-other order. This order type is composed of three separate orders sent simultaneously
         /// </summary>
-        public async Task<IOrder> PlaceOtocoOrder(string accountNumber, string duration, List<(string, int, string, string, string, double?, double?)> legs, bool preview = false)
+        public async Task<IOrder> PlaceOtocoOrder(string accountNumber, string duration, List<(string, int, string, string, string, double?, double?)> legs, string tag = null, bool preview = false)
         {
             var data = new Dictionary<string, string>
             {
                 { "class", "otoco" },
                 { "duration", duration },
+                { "tag", tag },
                 { "preview", preview.ToString() }
             };
 
