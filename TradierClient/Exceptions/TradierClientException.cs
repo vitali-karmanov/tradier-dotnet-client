@@ -63,7 +63,7 @@ namespace Tradier.Client.Exceptions
 
         public TradierClientException(Fault fault, HttpResponseMessage response)
         {
-            throw new Exception(responseBuilder(response, fault));
+            throw new Exception(ResponseBuilder(response, fault));
         }
 
         public TradierClientException(string message, Exception innerException)
@@ -71,13 +71,13 @@ namespace Tradier.Client.Exceptions
         {
         }
 
-        private string responseBuilder(HttpResponseMessage response, Fault fault = null)
+        private string ResponseBuilder(HttpResponseMessage response, Fault fault = null)
         {
             var messageStream = response.Content.ReadAsStreamAsync().Result;
             var messageField = (fault != null ? fault.FaultString : messageStream.ToString());
             string messageBuilt = $"IsSuccessStatusCode: {response.IsSuccessStatusCode}\n" +
                              $"Reason: {response.ReasonPhrase}\n" +
-                             $"StatusCode: {response.StatusCode.ToString()}\n" +
+                             $"StatusCode: {response.StatusCode}\n" +
                              $"Message: {messageField}";
 
             return messageBuilt;

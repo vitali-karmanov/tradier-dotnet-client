@@ -26,7 +26,9 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// The user’s profile contains information pertaining to the user and his/her accounts
+        /// The user’s profile contains information pertaining to the user and his/her accounts.
+        /// In addition to listing all the accounts a user has, this call should be used to create
+        /// a personalized experience for your customers (i.e. displaying their name when they log in).
         /// </summary>
         public async Task<Profile> GetUserProfile()
         {
@@ -35,7 +37,9 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Get balances information for a specific or a default user account.
+        /// Get balances information for a specific user account. Account balances are calculated on
+        /// each request during market hours. Each night, balance figures are reconciled with our
+        /// clearing firm and used as starting point for the following market session.
         /// </summary>
         public async Task<Balances> GetBalances(string accountNumber = null)
         {
@@ -51,7 +55,7 @@ namespace Tradier.Client
         }
 
         /// <summary>
-        /// Get the current positions being held in an account. These positions are updated intraday via trading
+        /// Get the current positions being held in an account. These positions are updated intraday via trading.
         /// </summary>
         public async Task<Positions> GetPositions(string accountNumber = null)
         {
@@ -113,7 +117,7 @@ namespace Tradier.Client
         /// <summary>
         /// Retrieve orders placed within an account
         /// </summary>
-        public async Task<Orders> GetOrders(string accountNumber = null)
+        public async Task<Orders> GetOrders(string accountNumber = null, bool includeTags = false)
         {
             accountNumber = string.IsNullOrEmpty(accountNumber) ? _defaultAccountNumber : accountNumber;
 
@@ -127,29 +131,29 @@ namespace Tradier.Client
                 throw new MissingAccountNumberException();
             }
 
-            var response = await _requests.GetRequest($"accounts/{accountNumber}/orders");
+            var response = await _requests.GetRequest($"accounts/{accountNumber}/orders?includeTags={includeTags}");
             return JsonConvert.DeserializeObject<OrdersRootobject>(response).Orders;
         }
 
         /// <summary>
         /// Get detailed information about a previously placed order in the default account
         /// </summary>
-        public async Task<Order> GetOrder(int orderId)
+        public async Task<Order> GetOrder(int orderId, bool includeTags = false)
         {
             if (string.IsNullOrEmpty(_defaultAccountNumber))
             {
                 throw new MissingAccountNumberException("The default account number was not defined.");
             }
 
-            return await GetOrder(_defaultAccountNumber, orderId);
+            return await GetOrder(_defaultAccountNumber, orderId, includeTags);
         }
 
         /// <summary>
         /// Get detailed information about a previously placed order
         /// </summary>
-        public async Task<Order> GetOrder(string accountNumber, int orderId)
+        public async Task<Order> GetOrder(string accountNumber, int orderId, bool includeTags = false)
         {
-            var response = await _requests.GetRequest($"accounts/{accountNumber}/orders/{orderId}");
+            var response = await _requests.GetRequest($"accounts/{accountNumber}/orders/{orderId}?includeTags={includeTags}");
             return JsonConvert.DeserializeObject<Orders>(response).Order.FirstOrDefault();
         }
     }

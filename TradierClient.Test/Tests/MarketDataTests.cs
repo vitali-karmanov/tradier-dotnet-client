@@ -11,7 +11,7 @@ namespace TradierClient.Test.Tests
     public class MarketDataTests
     {
         private Tradier.Client.TradierClient _client;
-        private Settings _settings;
+        private TradierClientSettings _settings;
 
         [SetUp]
         public void Init()
@@ -22,13 +22,11 @@ namespace TradierClient.Test.Tests
         [SetUp]
         public void Setup()
         {
-            // Use SandBox API Token
-            var sandboxApiToken = _settings.SandboxApiToken;
-            _client = new Tradier.Client.TradierClient(sandboxApiToken);
+            var useProduction = _settings.UseProduction;
 
-            //Use Production API Token
-            //var apiToken = _settings.ApiToken;
-            //_client = new Tradier.Client.TradierClient(apiToken, true);
+            _client = useProduction
+                ? new Tradier.Client.TradierClient(_settings.ApiToken, _settings.AccountNumber, useProduction)
+                : new Tradier.Client.TradierClient(_settings.SandboxApiToken, _settings.AccountNumber, useProduction);
         }
 
         [Test]

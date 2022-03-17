@@ -8,7 +8,7 @@ namespace TradierClient.Test.Tests
     public class StreamingTests
     {
         private Tradier.Client.TradierClient _client;
-        private Settings _configuration;
+        private TradierClientSettings _configuration;
         private Stream _session;
 
         [SetUp]
