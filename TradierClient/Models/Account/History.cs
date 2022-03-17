@@ -41,19 +41,22 @@ namespace Tradier.Client.Models.Account
         public Journal Journal { get; set; }
     }
 
-    public class Trade
+    public class Journal
+    {
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
+        [JsonProperty("quantity")]
+        public float Quantity { get; set; }
+    }
+
+    public class Trade : Journal
     {
         [JsonProperty("commission")]
         public float Commission { get; set; }
 
-        [JsonProperty("description")]
-        public string Description { get; set; }
-
         [JsonProperty("price")]
         public float Price { get; set; }
-
-        [JsonProperty("quantity")]
-        public float Quantity { get; set; }
 
         [JsonProperty("symbol")]
         public string Symbol { get; set; }
@@ -62,34 +65,13 @@ namespace Tradier.Client.Models.Account
         public string TradeType { get; set; }
     }
 
-    public class Adjustment
+    public class Adjustment : Journal
     {
-        [JsonProperty("description")]
-        public string Description { get; set; }
-        
-        [JsonProperty("quantity")]
-        public float Quantity { get; set; }
     }
 
-    public class Option
+    public class Option : Journal
     {
         [JsonProperty("option_type")]
         public string OptionType { get; set; }
-
-        [JsonProperty("description")]
-        public string Description { get; set; }
-
-        [JsonProperty("quantity")]
-        public float Quantity { get; set; }
     }
-
-    public class Journal
-    {
-        [JsonProperty("description")]
-        public string Description { get; set; }
-        
-        [JsonProperty("quantity")]
-        public float Quantity { get; set; }
-    }
-
 }

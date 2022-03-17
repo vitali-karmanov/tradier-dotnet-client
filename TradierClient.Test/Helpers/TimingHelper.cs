@@ -6,7 +6,7 @@ namespace TradierClient.Test.Helpers
     {
         public static DateTime GetLastWednesday()
         {
-            var lastWednesday = DateTime.Now.AddDays(-1);
+            var lastWednesday = DateTime.Now.AddDays(-2);
             while (lastWednesday.DayOfWeek != DayOfWeek.Wednesday)
             {
                 lastWednesday = lastWednesday.AddDays(-1);
