@@ -2,7 +2,7 @@
 
 
 
-# Tradier .NET Client
+# Tradier .NET SDK Client
 
 Tradier .NET Client is a .NET Library for the [Tradier API](https://documentation.tradier.com/) to interact with the Tradier Brokerage platform to get account information, market data, place orders, and create watchlists. 
 
