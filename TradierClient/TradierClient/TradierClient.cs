@@ -20,6 +20,25 @@ namespace Tradier.Client
         //public Streaming Streaming { get; set; }
 
         /// <summary>
+        /// The TradierClient constructor (with an existing HttpClient that's already configured with token and url)
+        /// This allows setting up a proxy server to intercept requests and responses to record them to a file.
+        /// This is useful bother for debugging and for creating unit tests.
+        /// </summary>
+        public TradierClient(HttpClient httpClient, string defaultAccountNumber = null)
+        {
+            Requests request = new Requests(httpClient);
+
+            Authentication = new Authentication(request);
+            Account = new Account(request, defaultAccountNumber);
+            MarketData = new MarketData(request);
+            Trading = new Trading(request, defaultAccountNumber);
+            Watchlist = new WatchlistEndpoint(request);
+
+            // TODO: Coming soon
+            //Streaming = new Streaming(request);
+        }
+
+        /// <summary>
         /// The TradierClient constructor (with an existing HttpClient)
         /// </summary>
         public TradierClient(HttpClient httpClient, string apiToken, string defaultAccountNumber = null, bool useProduction = false)

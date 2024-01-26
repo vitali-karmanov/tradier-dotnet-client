@@ -90,6 +90,8 @@ namespace Tradier.Client
                 { "price", price.ToString() }
             };
 
+            if (preview) { data.Add("preview", preview.ToString()); }
+
             int index = 0;
 
             foreach (var leg in legs)
