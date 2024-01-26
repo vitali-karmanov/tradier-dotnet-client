@@ -21,6 +21,10 @@ namespace Tradier.Client.Exceptions
         public TradierClientException(HttpResponseMessage response)
         {
             Task<string> resp = response.Content.ReadAsStringAsync();
+            if ( response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                throw new TradierClientException($"Server returned 401 Bad Request: {resp.Result}");
+            }
             if (!string.IsNullOrEmpty(resp.Result))
             {
                 if (Equals(response.Content.Headers.ContentType, MediaTypeHeaderValue.Parse("application/json")))
